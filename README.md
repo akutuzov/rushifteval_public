@@ -10,7 +10,7 @@ The shared task is now officially finished.
 We are publishing the gold annotations and the leaderboard scores:
 
 ## Data
-- `annotated_dataset`: gold semantic change estimations for the Evaluation phase (aggregation of manually annotated data)
+- `annotated_dataset.tsv`: gold semantic change estimations for the Evaluation phase (aggregation of manually annotated data)
 - `leaderboard_results.tsv`:  a list of all Evaluation phase submissions with their corresponding scores.
 
 
