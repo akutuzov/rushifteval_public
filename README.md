@@ -1,10 +1,13 @@
 # RuShiftEval public data
 
 This repository contains public data and code for the [RuShiftEval'21 shared task](https://competitions.codalab.org/my/competition/28340).
-The shared task aims at evaluating the abilities of the existing NLP systems to detect the degree of diachronic semantic change for Russian nouns.
+The shared task aimed at evaluating the abilities of the existing NLP systems to detect the degree of diachronic semantic change for Russian nouns.
 
 - Join [our Telegram channel](https://t.me/rushifteval)
 - Download [pre-trained word2vec embeddings](https://competitions.codalab.org/competitions/28340#participate-get_data) for time-specific Russian corpora
+
+The shared task is now officially finished.
+We are publishing the gold annotations and the leaderboard scores:
 
 ## Data
 - `annotated_dataset`: gold semantic change estimations for the Evaluation phase (aggregation of manually annotated data)
