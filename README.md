@@ -6,6 +6,11 @@ The shared task aims at evaluating the abilities of the existing NLP systems to 
 - Join [our Telegram channel](https://t.me/rushifteval)
 - Download [pre-trained word2vec embeddings](https://competitions.codalab.org/competitions/28340#participate-get_data) for time-specific Russian corpora
 
+## Data
+- `annotated_dataset`: gold semantic change estimations for the Evaluation phase (aggregation of manually annotated data)
+- `leaderboard_results.tsv`:  a list of all Evaluation phase submissions with their corresponding scores.
+
+
 ## Starting kits
 
 In this directory, you will find submission templates for different phases of the shared task:
