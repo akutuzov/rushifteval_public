@@ -14,6 +14,8 @@ We are publishing the gold annotations and the leaderboard scores:
 - `annotated_testset.tsv`: gold semantic change estimations for the Evaluation phase (aggregation of manually annotated data)
 - `leaderboard_results.tsv`:  a list of all Evaluation phase submissions with their corresponding scores.
 
+The `raw_annotations` directory contains raw per-sentence annotator judgments.
+
 
 ## Starting kits
 
