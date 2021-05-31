@@ -1,6 +1,6 @@
 # RuShiftEval public data
 
-This repository contains public data and code for the [RuShiftEval'21 shared task](https://competitions.codalab.org/my/competition/28340).
+This repository contains public data and code for the [RuShiftEval'21 shared task](https://competitions.codalab.org/competitions/28340).
 The shared task aimed at evaluating the abilities of the existing NLP systems to detect the degree of diachronic semantic change for Russian nouns.
 
 - Join [our Telegram channel](https://t.me/rushifteval)
