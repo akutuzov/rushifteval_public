@@ -16,6 +16,14 @@ We are publishing the gold annotations and the leaderboard scores:
 
 The `raw_annotations` directory contains raw per-sentence annotator judgments.
 
+### Inter-rater agreement
+|              | Krippendorff's alpha | Spearman rho |
+|--------------|----------------------|--------------|
+| RuShiftEval-1|  0.506               | 0.521        |
+| RuShiftEval-2|  0.549               | 0.559        |
+| RuShiftEval-3|  0.544               | 0.556        |
+
+
 
 ## Starting kits
 
