@@ -36,6 +36,7 @@ The `raw_annotations` directory contains raw per-sentence annotator judgments.
 *Development set*
 
 |              | Krippendorff's alpha | Spearman rho |
+|--------------|----------------------|--------------|
 | RuShiftEval-1|  0.592               | 0.613        |
 | RuShiftEval-2|  0.609               | 0.627        |
 | RuShiftEval-3|  0.597               | 0.632        |
