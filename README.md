@@ -61,22 +61,22 @@ In this directory, you will find code for various baseline approaches for semant
 
 # References
 
-inproceedings{rushifteval_dataset,
-title = "Three-part diachronic semantic change dataset for {R}ussian",
-author = "Kutuzov, Andrey  and  Pivovarova, Lidia",
-booktitle = "Proceedings of the 2nd International Workshop on Computational Approaches to Historical Language Change",
-year = "2021",
-address = "online",
-publisher = "Association for Computational Linguistics",
-}
+inproceedings{rushifteval_dataset,  
+title = "Three-part diachronic semantic change dataset for {R}ussian",  
+author = "Kutuzov, Andrey  and  Pivovarova, Lidia",  
+booktitle = "Proceedings of the 2nd International Workshop on Computational Approaches to Historical Language Change",  
+year = "2021",  
+address = "online", 
+publisher = "Association for Computational Linguistics",  
+}  
 
 
-@inproceedings{rushifteval2021,
-title={Ru{S}hift{E}val: a shared task on semantic shift detection for {R}ussian},
-author={Kutuzov, Andrey and Pivovarova, Lidia},
-journal={Computational linguistics and intellectual technologies: Papers from the annual conference Dialogue},
-year={2021},
-}
+@inproceedings{rushifteval2021,  
+title={Ru{S}hift{E}val: a shared task on semantic shift detection for {R}ussian},  
+author={Kutuzov, Andrey and Pivovarova, Lidia},  
+journal={Computational linguistics and intellectual technologies: Papers from the annual conference Dialogue},  
+year={2021},  
+}  
 
 
 
