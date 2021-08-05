@@ -11,7 +11,7 @@ The shared task is now officially finished.
 We are publishing the gold annotations and the leaderboard scores:
 
 ## Data
-RuShiftEval dataset features semantic change scores for three time periods (more details in the [paper](http://www.dialog-21.ru/media/5296/pivovarovalpluskutuzova151.pdf)):
+RuShiftEval dataset features semantic change scores for three time periods (more details in the [paper](https://aclanthology.org/2021.lchange-1.2/)):
 
 - pre-Soviet VS Soviet (RuShiftEval-1)
 - Soviet VS post-Soviet (RuShiftEval-2)
