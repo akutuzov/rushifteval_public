@@ -1,6 +1,6 @@
 # RuShiftEval public data
 
-This repository contains public data and code for the [RuShiftEval'21 shared task](http://www.dialog-21.ru/media/5296/pivovarovalpluskutuzova151.pdf).
+This repository contains public data and code for the [RuShiftEval'21 shared task](http://www.dialog-21.ru/media/5536/pivovarovalpluskutuzova151.pdf).
 The shared task aimed at evaluating the abilities of the existing NLP systems to detect the degree of diachronic semantic change for Russian nouns.
 
 - Join [our Telegram channel](https://t.me/rushifteval)
