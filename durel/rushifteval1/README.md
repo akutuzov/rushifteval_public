@@ -17,6 +17,9 @@ It compares word usages from the pre-Soviet (1700-1916) and Soviet (1918-1990) t
 
 This is one of three semantic change datasets for Russian published at the [Git repository](https://github.com/akutuzov/rushifteval_public).
 
+This dataset was annotated in a crowd-working effort with hundreds of annotators.
+Therefore, pairwise inter-rater agreement scores are meaningless and are not provided.
+
 Please find more information on the provided data in the paper referenced below.
  
 Version: 1.0.0, 17.03.2022.
