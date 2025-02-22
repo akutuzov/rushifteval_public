@@ -1,0 +1,1569 @@
+<html xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+    <center>
+        <h1 id="heading">стипендия (full)</h1>
+    </center>
+
+
+    <!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+    <style type="text/css">
+       #mynetwork {
+            width: 65%;
+            height: 90%;
+
+            margin-right: 2%;
+
+            height: {
+                    {
+                    height
+                }
+            }
+
+            ;
+
+            background-color: {
+                    {
+                    bgcolor
+                }
+            }
+
+            ;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+            {
+            % if nodes|length>100 and physics_enabled %
+        }
+
+        #loadingBar {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+
+            width: {
+                    {
+                    width
+                }
+            }
+
+            ;
+
+            height: {
+                    {
+                    height
+                }
+            }
+
+            ;
+            background-color:rgba(200, 200, 200, 0.8);
+            -webkit-transition: all 0.5s ease;
+            -moz-transition: all 0.5s ease;
+            -ms-transition: all 0.5s ease;
+            -o-transition: all 0.5s ease;
+            transition: all 0.5s ease;
+            opacity:1;
+        }
+
+        #bar {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 20px;
+            height: 20px;
+            margin: auto auto auto auto;
+            border-radius: 11px;
+            border: 2px solid rgba(30, 30, 30, 0.05);
+            background: rgb(0, 173, 246);
+            /* Old browsers */
+            box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.4);
+        }
+
+        #border {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 500px;
+            height: 23px;
+            margin: auto auto auto auto;
+            box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        #text {
+            position: absolute;
+            top: 8px;
+            left: 530px;
+            width: 30px;
+            height: 50px;
+            margin: auto auto auto auto;
+            font-size: 22px;
+            color: #000000;
+        }
+
+        div.outerBorder {
+            position: relative;
+            top: 400px;
+            width: 600px;
+            height: 44px;
+            margin: auto auto auto auto;
+            border: 8px solid rgba(0, 0, 0, 0.1);
+            background: rgb(252, 252, 252);
+            /* Old browsers */
+            background: -moz-linear-gradient(top, rgba(252, 252, 252, 1) 0%, rgba(237, 237, 237, 1) 100%);
+            /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(252, 252, 252, 1)), color-stop(100%, rgba(237, 237, 237, 1)));
+            /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top, rgba(252, 252, 252, 1) 0%, rgba(237, 237, 237, 1) 100%);
+            /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top, rgba(252, 252, 252, 1) 0%, rgba(237, 237, 237, 1) 100%);
+            /* Opera 11.10+ */
+            background: -ms-linear-gradient(top, rgba(252, 252, 252, 1) 0%, rgba(237, 237, 237, 1) 100%);
+            /* IE10+ */
+            background: linear-gradient(to bottom, rgba(252, 252, 252, 1) 0%, rgba(237, 237, 237, 1) 100%);
+            /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fcfcfc', endColorstr='#ededed', GradientType=0);
+            /* IE6-9 */
+            border-radius: 72px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+            {
+            % endif %
+        }
+
+            {
+            % if conf %
+        }
+
+        #config {
+            float: left;
+            width: 400px;
+            height: 600px;
+        }
+
+            {
+            % endif %
+        }
+
+            {
+            % if tooltip_link %
+        }
+
+        /* position absolute is important and the container has to be relative or absolute as well. */
+        div.popup {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            display: none;
+            background-color: #f5f4ed;
+            -moz-border-radius: 3px;
+            -webkit-border-radius: 3px;
+            border-radius: 3px;
+            border: 1px solid #808074;
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+
+
+        /* hide the original tooltip */
+
+
+        .vis-tooltip {
+            position: absolute;
+        }
+
+        #config {
+            display: none;
+
+        }
+
+            {
+            % endif %
+        }
+
+        #custom_wugs {
+            height: 90%;
+            width: 30%;
+            overflow: scroll;
+        }
+
+        #custom_wugs>* {
+            padding: 1%;
+            margin-left: 2%;
+        }
+
+
+
+
+
+
+        .help-tip {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            text-align: center;
+            background-color: #E55B0A;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            font-size: 14px;
+            line-height: 26px;
+            cursor: default;
+        }
+
+        .help-tip:before {
+            content: '?';
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .help-tip:hover p {
+            display: block;
+            transform-origin: 100% 0%;
+
+            -webkit-animation: fadeIn 0.3s ease-in-out;
+            animation: fadeIn 0.3s ease-in-out;
+
+        }
+
+        .help-tip p {
+            /* The tooltip */
+            display: none;
+            text-align: left;
+            background-color: #1E2021;
+            padding: 20px;
+            width: 800px;
+            position: absolute;
+            border-radius: 3px;
+            box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+            right: 16px;
+            color: #FFF;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .help-tip p:before {
+            /* The pointer of the tooltip */
+            position: absolute;
+            content: '';
+            width: 0;
+            height: 0;
+            border: 6px solid transparent;
+            border-bottom-color: #1E2021;
+            right: 10px;
+            top: -12px;
+        }
+
+        .help-tip p:after {
+            /* Prevents the tooltip from being hidden */
+            width: 100%;
+            height: 40px;
+            content: '';
+            position: absolute;
+            top: -40px;
+            left: 0;
+        }
+
+
+        /* CSS animation */
+
+        @-webkit-keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.6);
+            }
+
+            100% {
+                opacity: 100%;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 100%;
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-icon {
+            position: absolute;
+            top: 40%;
+            left: 30%;
+            transform: translate(-50%, -50%);
+            border: 16px solid #f3f3f3; /* Light grey */
+            border-top: 16px solid red;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+            visibility: hidden;
+        }
+
+        #custom_wugs {
+            font-size: smaller;
+        }
+
+        .shifted {
+            margin-left: 3%;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        #fillSD {
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+    </style>
+
+</head>
+
+<body>
+     <div id="loader" style="display: none"></div>
+
+    <div id="mynetwork"></div>
+    
+    
+
+    <div id="custom_wugs">
+
+
+
+        <div class="help-tip">
+            <p><em>General</em><br />
+           Firefox is the recommended browser for this application. For large graphs, loading time may vary. This application is under development. Feedback is appreciated. The code, from which you can generate your own graphs, can be found here:  <a href="https://github.com/Garrafao/WUGs/" target="_blank" style="color: white">WUGs repository</a><br /><br /><br />
+                <em>Statistics</em><br />
+            The statistics section gets updated as the filters are used. For in-depth stats, refer to the stats dropdowns on the bottom.<br /><br /><br />
+                <em>Edge & node filters</em><br />
+            Edge weights are calculated as the mean of all annotations of the node pair.
+            Nodes with noisy data appear black and have -1 as their label. Both the noisy nodes and edges with wrongly calculated weights can be filtered out.
+            Edge and node filters are interlinked and should show the desired selection. While one filter is being calculated, the page will prevent you from selecting another filter.<br /><br /><br />
+                <em>Annotators filter</em><br />
+            The annotators filter resets all other filters and shows the initial graph, but only edges the selected annotators have annotated.</p>
+        </div>
+
+        <div class="infoContainer">
+            <h4>Info: </h4>
+            <div id="clusterInfo"></div>
+            <h4>Statistics:</h4>
+            <div id="statistics"></div>
+            <p id="fillMean">Edge weight mean: </p>
+            <p id="fillSD">Edge weight standard deviation: </p>
+        </div>
+        <div class ="edgeFilterContainer">
+            <h4>Edge filters: </h4>
+
+            <label for="checkboxNaN">Show NaN edges </label>
+            <input type="checkbox" id="checkboxNaN" onclick="filterNaN()">
+            <br><br>
+            <div class="slideContainer" style="display: block; clear: both">
+                <label for="slider-min" style="display: block">Min weight: <span id="sliderValueDisplayMin" style="display: inline-block">1</span></label>
+                <input type="range" min="1" max="4" value="1" class="slider-load" id="slider-min">
+                <label for="slider" style="display: block">Max weight: <span id="sliderValueDisplay" style="display: inline-block">4</span></label>
+                <input type="range" min="1" max="4" value="4" class="slider-load" id="slider">
+            </div>
+        </div>
+
+
+
+
+        <div class="nodeFilterContainer">
+            <h4>Node filters: </h4>
+
+            <label for="checkboxNoiseLabels">Show noise cluster</label>
+            <input type="checkbox" id="checkboxNoiseLabels" onclick="filterNoiseLabels()">
+            <br><br>
+            <form onsubmit="dateFilter();return false">
+                <label for="minPicker">From date: </label>
+                <select class="picker" id="minPicker"></select>
+                <label for="maxPicker">to date: </label>
+                <select class="picker" id="maxPicker"></select>
+                <input type="submit" value="Filter">
+            </form>
+
+            <label for="groupPicker">Grouping: </label>
+            <select  class="select-load" id="groupPicker">
+                <option>All</option>
+                <option>1</option>
+                <option>2</option>
+            </select>
+            <div class="loading-icon"></div>
+        </div>
+
+        <div id="annotatorsContainer"></div>
+
+        <div class="detailsContainer">
+            <details id="stats">
+                <summary class="bold">Stats</summary>
+                <table id="stats-table"></table>
+            </details>
+            <details id="statsGroupings">
+                <summary class="bold">Grouping stats</summary>
+                <table id="stats-groupings-table"></table>
+            </details>
+            <details id="statsAgreement">
+                <summary class="bold">Agreement stats</summary>
+                <table id="stats-agreement-table"></table>
+            </details>
+            <details id="statsPlotting">
+                <summary class="bold">Plotting stats</summary>
+                <table id="stats-plotting-table"></table>
+            </details>
+            <details id="statsDataJoint">
+                <summary class="bold">Annotator data</summary>
+            </details>
+        </div>
+
+    </div>
+
+    <div id="config">
+
+    </div>
+
+    
+     <!--<script type="text/javascript" src="../stats.js"></script>
+     <script type="text/javascript" src="../stats_agreement.js"></script>
+     <script type="text/javascript" src="../stats_groupings.js"></script>
+     <script type="text/javascript" src="../stats_plotting.js"></script>
+     <script type="text/javascript" src="../data_joint.js"></script>-->
+
+    <script type="text/javascript">
+        // initialize global variables.
+        var edges;
+        var nodes;
+        var network;
+        var container;
+        var options, data;
+
+
+        // This method is responsible for drawing the graph, returns the drawn network
+        function drawGraph() {
+            var container = document.getElementById('mynetwork');
+
+            
+
+            // parsing and collecting nodes and edges from the python
+            nodes = new vis.DataSet([{"color": "blue", "date": "1700", "id": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5054-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0413\u043e\u0440\u043e\u0434 \u0441\u043e\u0431\u0440\u0430\u043b \u0431\u043e\u043b\u044c\u0448\u0443\u044e \u0441\u0443\u043c\u043c\u0443 (\u043d\u0435 \u043f\u043e\u043c\u043d\u044e \u0446\u0438\u0444\u0440\u044b), \u0438\u0437 \u043a\u043e\u0442\u043e\u0440\u043e\u0439 \u0441\u0434\u0435\u043b\u0430\u043b\u0438\u003cbr\u003e\u043f\u043e\u0445\u043e\u0440\u043e\u043d\u044b, \u043f\u043e\u0441\u0442\u0430\u0432\u0438\u043b\u0438 \u043f\u0430\u043c\u044f\u0442\u043d\u0438\u043a, \u0430 \u0438\u0437 \u043e\u0441\u0442\u0430\u0442\u043a\u043e\u0432 \u0441\u043e\u043e\u0440\u0443\u0434\u0438\u043b\u0438 \u043f\u0430\u043c\u044f\u0442\u043d\u0438\u043a\u003cbr\u003e\u043d\u0435\u0442\u043b\u0435\u043d\u043d\u044b\u0439: \u0434\u0432\u0435 \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0438\u003c/b\u003e \u0432 \u041c\u043e\u0441\u043a\u043e\u0432\u0441\u043a\u043e\u043c \u0443\u043d\u0438\u0432\u0435\u0440\u0441\u0438\u0442\u0435\u0442\u0435, \u0438\u043c\u0435\u043d\u0443\u0435\u043c\u044b\u0435\u003cbr\u003e\u0442\u0443\u0447\u043a\u043e\u0432\u0441\u043a\u0438\u043c\u0438 \u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f\u043c\u0438.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1700\u003cbr\u003egrouping: 1700-1916\u003cbr\u003eidentifier: 1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5054-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": -56.5490641490314, "y": 689.7728025353877}, {"color": "blue", "date": "1700", "id": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5066-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0421\u043c\u0435\u0442\u0430 \u0437\u0434\u0430\u043d\u0438\u044f \u0438\u0441\u0447\u0438\u0441\u043b\u0435\u043d\u0430 \u0432 70 000 \u0440. \u0438 \u043e\u0431\u043e\u0440\u0443\u0434\u043e\u0432\u0430\u043d\u0438\u044f -- \u0432 30 000\u003cbr\u003e\u0440. -- \u0422\u043e\u0432\u0430\u0440\u0438\u0449\u0435\u0441\u0442\u0432\u043e \"\u041d\u0430\u0441\u043b\u0435\u0434\u043d\u0438\u043a\u0438 \u041d. \u041c. \u041f\u043e\u043b\u0443\u0448\u0438\u043d\u0430\" \u043f\u0440\u0435\u043f\u0440\u043e\u0432\u043e\u0434\u0438\u043b\u0438 \u0432\u003cbr\u003e\u0443\u043d\u0438\u0432\u0435\u0440\u0441\u0438\u0442\u0435\u0442 6 000 \u0440. \u0434\u043b\u044f \u043e\u0431\u0440\u0430\u0437\u043e\u0432\u0430\u043d\u0438\u044f \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0438\u003c/b\u003e \u0438\u043c\u0435\u043d\u0438 \u0443\u043c\u0435\u0440\u0448\u0435\u0433\u043e\u003cbr\u003e\u0434\u0438\u0440\u0435\u043a\u0442\u043e\u0440\u0430 \u0444\u0438\u0440\u043c\u044b \u041f. \u041f. \u0425\u0430\u0431\u0430\u0440\u0438\u043d\u0430.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1700\u003cbr\u003egrouping: 1700-1916\u003cbr\u003eidentifier: 1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5066-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": -800.9885241904727, "y": 1120.8396793375869}, {"color": "blue", "date": "1700", "id": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5088-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0422\u0430\u043c \u043e\u0442\u0432\u0435\u0442\u0438\u043b\u0438: \u0435\u0441\u043b\u0438 \u0432\u044b \u043f\u0440\u0435\u0434\u0441\u0442\u0430\u0432\u0438\u0442\u0435 \u043d\u0430\u043c \u0443\u0434\u043e\u0441\u0442\u043e\u0432\u0435\u0440\u0435\u043d\u0438\u0435 \u0438\u043d\u0441\u0442\u0438\u0442\u0443\u0442\u0430 \u043e\u003cbr\u003e\u0442\u043e\u043c, \u0447\u0442\u043e \u0432\u044b \u043f\u0440\u0438\u043d\u044f\u0442\u044b, \u043c\u044b \u0434\u0430\u0434\u0438\u043c \u0432\u0430\u043c \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044e\u003c/b\u003e.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1700\u003cbr\u003egrouping: 1700-1916\u003cbr\u003eidentifier: 1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5088-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": 141.24878757600516, "y": 1445.7783041126904}, {"color": "blue", "date": "1700", "id": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5074-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0410 \u0447\u0442\u043e \u0442\u0430\u043a\u043e\u0435 \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f\u003c/b\u003e \u0427\u0435\u0440\u0442 \u0435\u0435 \u0438 \u0437\u043d\u0430\u0435\u0442, \u0447\u0442\u043e \u043e\u043d\u0430\u003cbr\u003e\u0437\u043d\u0430\u0447\u0438\u0442!\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1700\u003cbr\u003egrouping: 1700-1916\u003cbr\u003eidentifier: 1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5074-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": 1147.777737381478, "y": 818.6560705757852}, {"color": "blue", "date": "1700", "id": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5090-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0422\u0443\u0442 \u0436\u0435, \u043d\u0430 \u043c\u043e\u0433\u0438\u043b\u0435, \u0432\u043e \u0432\u0440\u0435\u043c\u044f \u043f\u043e\u0445\u043e\u0440\u043e\u043d \u0431\u044b\u043b\u0430 \u043e\u0442\u043a\u0440\u044b\u0442\u0430 \u043f\u043e\u0434\u043f\u0438\u0441\u043a\u0430, \u043d\u043e\u003cbr\u003e\u043d\u0435 \u043d\u0430 \u043f\u0430\u043c\u044f\u0442\u043d\u0438\u043a, \u0430 \u0434\u043b\u044f \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0438\u003c/b\u003e \u0438\u043c\u0435\u043d\u0438 \u041f\u0438\u0441\u0430\u0440\u0435\u0432\u0430.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1700\u003cbr\u003egrouping: 1700-1916\u003cbr\u003eidentifier: 1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5090-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": 1275.387642839864, "y": -665.6568836413483}, {"color": "blue", "date": "1700", "id": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5092-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0413\u043b\u0430\u0432\u043d\u044b\u043c \u043e\u0431\u0440\u0430\u0437\u043e\u043c \u043e\u0431\u0441\u0443\u0436\u0434\u0430\u043b\u0441\u044f \u0432\u043e\u043f\u0440\u043e\u0441 \u043e \u0442\u0435\u0445, \u043a\u0442\u043e \u043f\u043e\u043b\u0443\u0447\u0430\u043b\u003cbr\u003e\u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0438\u003c/b\u003e, -- \u043f\u043e\u043b\u0443\u0447\u0435\u043d\u0438\u0435 \u0438\u0445 \u043a\u0430\u043a \u0440\u0430\u0437 \u0441\u043e\u0432\u043f\u0430\u043b\u043e \u0441 \u0437\u0430\u043a\u0440\u044b\u0442\u0438\u0435\u043c\u003cbr\u003e\u0438\u043d\u0441\u0442\u0438\u0442\u0443\u0442\u0430, \u0438 \u043f\u043e\u043b\u043e\u0436\u0435\u043d\u0438\u0435 \u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0430\u0442\u043e\u0432 \u0441\u0442\u0430\u043b\u043e \u0441\u0440\u0430\u0437\u0443 \u043a\u0440\u0438\u0442\u0438\u0447\u0435\u0441\u043a\u0438\u043c.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1700\u003cbr\u003egrouping: 1700-1916\u003cbr\u003eidentifier: 1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5092-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": 895.6089540002357, "y": -847.672043763354}, {"color": "blue", "date": "1700", "id": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5094-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0412\u043e \u0432\u0441\u044f\u043a\u043e\u043c \u0441\u043b\u0443\u0447\u0430\u0435 \u043a\u0430\u043a\u0438\u0435 \u0431\u044b \u0442\u043e \u043d\u0438 \u0431\u044b\u043b\u043e \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0438\u003c/b\u003e \u0438 \u043f\u043e\u0441\u043e\u0431\u0438\u044f\u003cbr\u003e\u0441\u043b\u0443\u0448\u0430\u0442\u0435\u043b\u044f\u043c \u0434\u043e\u043b\u0436\u043d\u044b \u0431\u044b\u0442\u044c \u0432\u044b\u0434\u0430\u0432\u0430\u0435\u043c\u044b \u0442\u043e\u043b\u044c\u043a\u043e \u0442\u043e\u0433\u0434\u0430, \u043a\u043e\u0433\u0434\u0430 \u043e\u043d\u0438 \u0438\u0441\u043f\u043e\u043b\u043d\u044f\u044e\u0442\u003cbr\u003e\u043f\u0440\u043e\u0433\u0440\u0430\u043c\u043c\u0443 \u0437\u0430\u043d\u044f\u0442\u0438\u0439, \u043d\u0430\u043c\u0435\u0447\u0435\u043d\u043d\u044b\u0445 \u0434\u043b\u044f \u0441\u043b\u0443\u0448\u0430\u0442\u0435\u043b\u0435\u0439.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1700\u003cbr\u003egrouping: 1700-1916\u003cbr\u003eidentifier: 1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5094-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": -298.38959163624526, "y": 458.6562696540862}, {"color": "blue", "date": "1700", "id": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5096-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0411\u044b\u043b \u043b\u0438 \u0441\u0431\u043e\u0440 \u0434\u043e\u0441\u0442\u0430\u0442\u043e\u0447\u0435\u043d \u0434\u043b\u044f \u043e\u0441\u043d\u043e\u0432\u0430\u043d\u0438\u044f \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0438\u003c/b\u003e, \u044d\u0442\u043e\u0433\u043e \u044f\u003cbr\u003e\u0435\u0449\u0435 \u043d\u0435 \u0437\u043d\u0430\u044e.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1700\u003cbr\u003egrouping: 1700-1916\u003cbr\u003eidentifier: 1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5096-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": -1687.94610598644, "y": -722.3549465536444}, {"color": "blue", "date": "1700", "id": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5064-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u041e\u043d\u0430 \u0440\u0435\u0448\u0438\u043b\u0430\u0441\u044c \u0437\u0430\u0432\u0435\u0449\u0430\u0442\u044c \u0435\u0433\u043e \u043d\u0430 \u0443\u0447\u0440\u0435\u0436\u0434\u0435\u043d\u0438\u0435 \u043e\u0434\u043d\u043e\u0439 \u0438\u043b\u0438 \u0434\u0432\u0443\u0445\u003cbr\u003e\u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0439\u003c/b\u003e \u0432 \u0442\u043e\u043c \u0438\u043d\u0441\u0442\u0438\u0442\u0443\u0442\u0435, \u043a\u043e\u0442\u043e\u0440\u044b\u0439 \u0434\u0430\u043b \u0435\u0439 \u043f\u0440\u0438\u044e\u0442.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1700\u003cbr\u003egrouping: 1700-1916\u003cbr\u003eidentifier: 1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5064-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": -1202.1638040130026, "y": 1185.6987382032507}, {"color": "blue", "date": "1700", "id": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5098-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u041a\u0443\u0440\u0441\u043e\u0432\u043e\u0439 \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0438\u003c/b\u003e \u043c\u0430\u043b\u043e, \u043e\u0441\u043e\u0431\u0435\u043d\u043d\u043e \u0441\u0435\u043c\u0435\u0439\u043d\u044b\u043c.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1700\u003cbr\u003egrouping: 1700-1916\u003cbr\u003eidentifier: 1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5098-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": 339.5167716029916, "y": -62.71304548627657}, {"color": "blue", "date": "1700", "id": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5082-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0411\u0440\u0430\u0442 \u0438\u0437\u0432\u0435\u0441\u0442\u043d\u043e\u0433\u043e \u043f\u0438\u0441\u0430\u0442\u0435\u043b\u044f \u041c\u043e\u0440\u0434\u043e\u0432\u0446\u0435\u0432 \u0432 \u0441\u0432\u043e\u0435\u043c \u0434\u0443\u0445\u043e\u0432\u043d\u043e\u043c \u0437\u0430\u0432\u0435\u0449\u0430\u043d\u0438\u0438\u003cbr\u003e\u043e\u0441\u0442\u0430\u0432\u0438\u043b \u043f\u043e 35 \u0442\u044b\u0441. \u0440\u0443\u0431. \u043d\u0430 \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0438\u003c/b\u003e \u0432 \u043e\u0431\u0435\u0438\u0445 \u043a\u0438\u0441\u043b\u043e\u0432\u043e\u0434\u0441\u043a\u0438\u0445\u003cbr\u003e\u0433\u0438\u043c\u043d\u0430\u0437\u0438\u044f\u0445. \u043d\u0435\u0438\u0437\u0432\u0435\u0441\u0442\u043d\u044b\u0439.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1700\u003cbr\u003egrouping: 1700-1916\u003cbr\u003eidentifier: 1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5082-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": 584.9795221985856, "y": 1361.1240894271868}, {"color": "blue", "date": "1700", "id": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5068-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u041c\u043e\u0441\u043a\u043e\u0432\u0441\u043a\u0430\u044f \u0445\u0440\u043e\u043d\u0438\u043a\u0430 \u0421\u0442\u0443\u0434\u0435\u043d\u0442\u044b-\u043c\u0435\u0434\u0438\u043a\u0438 \u041c\u043e\u0441\u043a\u043e\u0432\u0441\u043a\u043e\u0433\u043e \u0443\u043d\u0438\u0432\u0435\u0440\u0441\u0438\u0442\u0435\u0442\u0430,\u003cbr\u003e\u043e\u043a\u043e\u043d\u0447\u0438\u0432\u0448\u0438\u0435 \u043a\u0443\u0440\u0441 \u0432 \u043d\u044b\u043d\u0435\u0448\u043d\u0435\u043c \u0433\u043e\u0434\u0443, \u0434\u0430\u043b\u0438 \u0434\u0440\u0443\u0433 \u0434\u0440\u0443\u0433\u0443 \u0432\u0437\u0430\u0438\u043c\u043d\u044b\u0435\u003cbr\u003e\u043e\u0431\u044f\u0437\u0430\u0442\u0435\u043b\u044c\u0441\u0442\u0432\u0430 \u043f\u043e\u043a\u0440\u044b\u0442\u044c \u0441\u0432\u043e\u0438 \u0434\u043e\u043b\u0433\u0438 \u043f\u043e \u043a\u0443\u0440\u0441\u043e\u0432\u043e\u0439 \u043a\u0430\u0441\u0441\u0435 \u0432 \u0431\u043b\u0438\u0436\u0430\u0439\u0448\u0438\u0435 \u0442\u0440\u0438\u003cbr\u003e\u0433\u043e\u0434\u0430 \u0441 \u0442\u0435\u043c, \u0447\u0442\u043e\u0431\u044b \u043d\u0430 \u044d\u0442\u0438 \u0441\u0443\u043c\u043c\u044b \u0431\u044b\u043b\u0430 \u0443\u0447\u0440\u0435\u0436\u0434\u0435\u043d\u0430 \u043f\u0440\u0438 \u0443\u043d\u0438\u0432\u0435\u0440\u0441\u0438\u0442\u0435\u0442\u0435\u003cbr\u003e\u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f\u003c/b\u003e \u0438\u043c\u0435\u043d\u0438 \u0432\u0440\u0430\u0447\u0435\u0439 \u0432\u044b\u043f\u0443\u0441\u043a\u0430 1909 \u0433 \u0412\u043b\u0430\u0434\u0435\u043b\u0435\u0446 \u043e\u0434\u043d\u043e\u0433\u043e\u003cbr\u003e\u0430\u043d\u0442\u0438\u043a\u0432\u0430\u0440\u043d\u043e\u0433\u043e \u043c\u0430\u0433\u0430\u0437\u0438\u043d\u0430 \u043f\u0440\u0438\u043e\u0431\u0440\u0435\u043b \u0432 \u041a\u0438\u0435\u0432\u0435 \u0443 \u043d\u0435\u0433\u043e\u0435\u0433\u043e \u0427\u0430\u0433\u043d\u043e\u0432\u0446\u0430 \u0441\u0435\u043c\u0435\u0439\u043d\u044b\u0439\u003cbr\u003e\u0430\u0440\u0445\u0438\u0432 \u0413\u043e\u0433\u043e\u043b\u044f, \u0441\u043e\u0434\u0435\u0440\u0436\u0430\u0449\u0438\u0439 42 \u0441\u043e\u0431\u0441\u0442\u0432\u0435\u043d\u043d\u043e\u0440\u0443\u0447\u043d\u044b\u0445 \u043f\u0438\u0441\u044c\u043c\u0430 \u0437\u043d\u0430\u043c\u0435\u043d\u0438\u0442\u043e\u0433\u043e\u003cbr\u003e\u043f\u0438\u0441\u0430\u0442\u0435\u043b\u044f, \u0433\u0440\u0430\u043c\u043e\u0442\u044b, \u043f\u043e\u0436\u0430\u043b\u043e\u0432\u0430\u043d\u043d\u044b\u0435 \u0440\u043e\u0434\u0443 \u0413\u043e\u0433\u043e\u043b\u044f, \u043a\u043d\u0438\u0433\u0438 \u0438\u0437 \u0433\u043e\u0433\u043e\u043b\u0435\u0432\u0441\u043a\u043e\u0439\u003cbr\u003e\u0431\u0438\u0431\u043b\u0438\u043e\u0442\u0435\u043a\u0438, \u0441\u043e\u0441\u0442\u0430\u0432\u043b\u0435\u043d\u043d\u044b\u0439 \u0413\u043e\u0433\u043e\u043b\u0435\u043c \u0433\u0435\u0440\u0431\u0430\u0440\u0438\u0439 \u0441 \u0435\u0433\u043e \u0430\u0432\u0442\u043e\u0433\u0440\u0430\u0444\u043e\u043c \u0438\u003cbr\u003e\u043f\u0440\u043e\u0447.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1700\u003cbr\u003egrouping: 1700-1916\u003cbr\u003eidentifier: 1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5068-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": -790.0309122260372, "y": -90.86151981589151}, {"color": "blue", "date": "1700", "id": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5070-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u041f\u0440\u0435\u0434\u0441\u0435\u0434\u0430\u0442\u0435\u043b\u044c \u043a\u043e\u043c\u0438\u0441\u0441\u0438\u0438 \u0441\u043e\u043e\u0431\u0449\u0438\u043b, \u0447\u0442\u043e \u043a\u0430\u043f\u0438\u0442\u0430\u043b \"\u0420\u0443\u0441\u0441\u043a\u0438\u0445\u003cbr\u003e\u0412\u0435\u0434\u043e\u043c\u043e\u0441\u0442\u0435\u0439\", \u0434\u043e\u0441\u0442\u0438\u0433 30 000 \u0440\u0443\u0431. \u0438 \u0447\u0442\u043e \u043f\u0440\u043e\u0446\u0435\u043d\u0442\u044b \u0441 \u044d\u0442\u043e\u0433\u043e \u043a\u0430\u043f\u0438\u0442\u0430\u043b\u0430\u003cbr\u003e\u043f\u043e\u0441\u0442\u0443\u043f\u0430\u044e\u0442 \u043d\u0430 \u043f\u043e\u0441\u043e\u0431\u0438\u044f \u043b\u0438\u0442\u0435\u0440\u0430\u0442\u043e\u0440\u0430\u043c \u0438 \u0436\u0443\u0440\u043d\u0430\u043b\u0438\u0441\u0442\u0430\u043c \u0438 \u043d\u0430 \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0438\u003c/b\u003e\u003cbr\u003e\u0434\u0435\u0442\u044f\u043c \u043d\u0430\u0431\u043e\u0440\u0449\u0438\u043a\u043e\u0432.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1700\u003cbr\u003egrouping: 1700-1916\u003cbr\u003eidentifier: 1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5070-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": -1590.3208547746904, "y": 21.209168673470064}, {"color": "blue", "date": "1700", "id": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5072-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u041f\u0440\u0438\u0447\u0435\u043c \u044f \u0434\u043e\u043b\u0436\u0435\u043d \u0437\u0430\u043c\u0435\u0442\u0438\u0442\u044c, \u0447\u0442\u043e \u0442\u0430\u043a \u043a\u0430\u043a \u0432\u0441\u0435 \u043c\u044b \u0441\u043e \u0441\u043c\u0435\u0440\u0442\u044c\u044e \u043e\u0442\u0446\u0430\u003cbr\u003e\u043e\u0441\u0442\u0430\u043b\u0438\u0441\u044c \u0431\u0435\u0437 \u0432\u0441\u044f\u043a\u0438\u0445 \u0441\u0440\u0435\u0434\u0441\u0442\u0432, \u0442\u043e \u044f, \u0430 \u0442\u0430\u043a\u0436\u0435 \u0438 \u043c\u043e\u0439 \u0431\u0440\u0430\u0442, \u0432 \u0442\u0435\u0447\u0435\u043d\u0438\u0435 \u0432\u0441\u0435\u0433\u043e\u003cbr\u003e\u0432\u0440\u0435\u043c\u0435\u043d\u0438 \u043f\u0440\u0435\u0431\u044b\u0432\u0430\u043d\u0438\u044f \u043d\u0430\u0448\u0435\u0433\u043e \u0432 \u0443\u043d\u0438\u0432\u0435\u0440\u0441\u0438\u0442\u0435\u0442\u0430, \u043f\u043e\u043b\u0443\u0447\u0430\u043b\u0438 \u043e\u0442 \u043a\u0430\u0432\u043a\u0430\u0437\u0441\u043a\u043e\u0433\u043e\u003cbr\u003e\u043d\u0430\u043c\u0435\u0441\u0442\u043d\u0438\u0447\u0435\u0441\u0442\u0432\u0430 50 \u0440\u0443\u0431\u043b\u0435\u0439 \u0432 \u043c\u0435\u0441\u044f\u0446 \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0438\u003c/b\u003e, \u0438, \u0442\u0430\u043a\u0438\u043c \u043e\u0431\u0440\u0430\u0437\u043e\u043c, \u044f\u003cbr\u003e\u043a\u043e\u043d\u0447\u0438\u043b \u043a\u0443\u0440\u0441 \u0443\u043d\u0438\u0432\u0435\u0440\u0441\u0438\u0442\u0435\u0442\u0430.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1700\u003cbr\u003egrouping: 1700-1916\u003cbr\u003eidentifier: 1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5072-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": 129.4268096247899, "y": 954.0467593152805}, {"color": "blue", "date": "1700", "id": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5076-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0410 \u0432\u0435\u0434\u044c \u0442\u043e \u0431\u044b\u043b\u043e \u0432\u0440\u0435\u043c\u044f, \u043a\u043e\u0433\u0434\u0430 \u0434\u0430\u0436\u0435 \u0437\u0430 \u043e\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0443\u044e\u0449\u0443\u044e \u043f\u0443\u0433\u043e\u0432\u0438\u0446\u0443 \u043d\u0430\u003cbr\u003e\u0444\u043e\u0440\u043c\u0435\u043d\u043d\u043e\u0439 \u043e\u0434\u0435\u0436\u0434\u0435, \u0437\u0430 \u043f\u043e\u0437\u0430\u0431\u044b\u0442\u0443\u044e \u0448\u043f\u0430\u0433\u0443, \u0437\u0430 \u043d\u0435\u0441\u043d\u044f\u0442\u0443\u044e \u0432 \u0440\u0430\u0437\u0434\u0435\u0432\u0430\u043b\u044c\u043d\u0435\u003cbr\u003e\u0444\u0443\u0440\u0430\u0436\u043a\u0443 \u0441\u0442\u0443\u0434\u0435\u043d\u0442\u044b \u043f\u043e\u043f\u0430\u0434\u0430\u043b\u0438 \u0432 \u043a\u0430\u0440\u0446\u0435\u0440, \u0430 \u043c\u043d\u043e\u0433\u043e-\u043a\u0440\u0430\u0442\u043d\u044b\u0435 \u043e\u0441\u043b\u0443\u0448\u043d\u0438\u043a\u0438 \u043b\u0438\u0448\u0430\u043b\u0438\u0441\u044c\u003cbr\u003e\u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0439\u003c/b\u003e \u0438 \u0447\u0443\u0442\u044c \u043d\u0435 \u0432\u044b\u043a\u043b\u044e\u0447\u0430\u043b\u0438\u0441\u044c \u0438\u0437 \u0437\u0430\u0432\u0435\u0434\u0435\u043d\u0438\u044f, \u043a\u043e\u0433\u0434\u0430 \u0448\u043f\u0438\u043e\u043d\u0441\u0442\u0432\u043e\u003cbr\u003e\u0441\u0432\u0438\u043b\u043e \u0441\u0435\u0431\u0435 \u043f\u0440\u043e\u0447\u043d\u043e\u0435 \u0438 \u0433\u0440\u044f\u0437\u043d\u043e\u0435 \u0433\u043d\u0435\u0437\u0434\u043e \u0441\u0440\u0435\u0434\u0438 \u0443\u0447\u0430\u0449\u0435\u0439\u0441\u044f \u043c\u043e\u043b\u043e\u0434\u0435\u0436\u0438,\u003cbr\u003e\u043d\u0430\u0441\u0430\u0436\u0434\u0430\u0435\u043c\u043e\u0435 \u0441\u0432\u043e\u0435\u043e\u0431\u0440\u0430\u0437\u043d\u043e\u0439 \u0438\u043d\u0441\u043f\u0435\u043a\u0442\u043e\u0440\u0441\u043a\u043e\u0439 \u0441\u0438\u0441\u0442\u0435\u043c\u043e\u0439.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1700\u003cbr\u003egrouping: 1700-1916\u003cbr\u003eidentifier: 1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5076-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": -796.83852930483, "y": -1052.2549327008865}, {"color": "blue", "date": "1700", "id": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5078-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u042f \u0437\u043d\u0430\u043b, \u0447\u0442\u043e \u0435\u0441\u043b\u0438 \u0441\u043a\u0430\u0436\u0443, \u0442\u043e \u041a\u043b\u0430\u0441\u0441\u043e\u0432\u0441\u043a\u0438\u0439 \u043f\u0440\u0435\u0434\u043b\u043e\u0436\u0438\u0442 \u043f\u043e\u0434\u0435\u043b\u0438\u0442\u044c\u0441\u044f\u003cbr\u003e\u0441\u0432\u043e\u0438\u043c\u0438 \u043a\u0440\u043e\u0445\u0430\u043c\u0438 \u0438\u043b\u0438 \u0432\u044b\u0445\u043b\u043e\u043f\u043e\u0447\u0435\u0442 \u043c\u043d\u0435 \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044e\u003c/b\u003e.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1700\u003cbr\u003egrouping: 1700-1916\u003cbr\u003eidentifier: 1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5078-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": -1083.1314794200018, "y": -239.5589152521058}, {"color": "blue", "date": "1700", "id": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5080-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0412 \u043e\u043c\u0441\u043a\u043e\u043c \u0441\u0435\u043b\u044c\u0441\u043a\u043e\u0445\u043e\u0437\u044f\u0439\u0441\u0442\u0432\u0435\u043d\u043d\u043e\u043c \u0443\u0447\u0438\u043b\u0438\u0449\u0435 \u0432\u043e\u0441\u043f\u0438\u0442\u0430\u043d\u043d\u0438\u043a\u0438 \u0441\u0434\u0435\u043b\u0430\u043b\u0438\u003cbr\u003e\u043f\u043e\u0434\u043f\u0438\u0441\u043a\u0443 \u0432 \u043f\u043e\u043b\u044c\u0437\u0443 \u043d\u0435\u0434\u043e\u0441\u0442\u0430\u0442\u043e\u0447\u043d\u043e\u0433\u043e \u0442\u043e\u0432\u0430\u0440\u0438\u0449\u0430 \u0438 \u043d\u0430 \u0441\u043e\u0431\u0440\u0430\u043d\u043d\u044b\u0435 \u0434\u0435\u043d\u044c\u0433\u0438\u003cbr\u003e\u0443\u0447\u0440\u0435\u0434\u0438\u043b\u0438 \u0434\u043b\u044f \u043d\u0435\u0433\u043e \u0432\u0440\u0435\u043c\u0435\u043d\u043d\u0443\u044e \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044e\u003c/b\u003e. \u043d\u0435\u0438\u0437\u0432\u0435\u0441\u0442\u043d\u044b\u0439.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1700\u003cbr\u003egrouping: 1700-1916\u003cbr\u003eidentifier: 1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5080-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": -57.482218957584756, "y": -1986.138633086496}, {"color": "blue", "date": "1700", "id": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5100-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u041f\u0440\u043e\u0445\u0430\u043d\u043e\u0432 \u043d\u0435 \u0431\u0435\u0434\u043d\u0435\u0439\u0448\u0438\u0439, \u0442\u043e \u043a\u0430\u043a\u0438\u043c \u0436\u0435 \u043e\u0431\u0440\u0430\u0437\u043e\u043c \u043e\u0431\u044a\u044f\u0441\u043d\u0438\u0442\u044c \u0442\u043e, \u0447\u0442\u043e \u043e\u043d\u003cbr\u003e\u043f\u043e\u043b\u0443\u0447\u0430\u0435\u0442 \u043e\u0434\u043d\u0443 \u0438\u0437 \u0433\u043e\u0440\u043e\u0434\u0441\u043a\u0438\u0445 \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0439\u003c/b\u003e, \u043d\u0430\u0437\u043d\u0430\u0447\u0435\u043d\u043d\u044b\u0445 \u0434\u043b\u044f \u0431\u0435\u0434\u043d\u0435\u0439\u0448\u0438\u0445\u003cbr\u003e\u0436\u0438\u0442\u0435\u043b\u0435\u0439 \u043f\u043e\u0441\u0430\u0434\u0430. \u043d\u0435\u0438\u0437\u0432\u0435\u0441\u0442\u043d\u044b\u0439.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1700\u003cbr\u003egrouping: 1700-1916\u003cbr\u003eidentifier: 1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5100-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": -74.61402095058678, "y": 201.26650787830903}, {"color": "blue", "date": "1700", "id": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5104-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e(\u041d\u0430\u0448. \u043a\u043e\u0440\u0440.) \u003cb\u003e\u0421\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0438\u003c/b\u003e \u0434\u043b\u044f \u043a\u0440\u0443\u0433\u043e\u0441\u0432\u0435\u0442\u043d\u044b\u0445 \u043f\u0443\u0442\u0435\u0448\u0435\u0441\u0442\u0432\u0438\u0439\u003cbr\u003e\u041b\u0438\u0446\u043e\u043c, \u043f\u043e\u0436\u0435\u043b\u0430\u0432\u0448\u0438\u043c \u043e\u0441\u0442\u0430\u0442\u044c\u0441\u044f \u043d\u0435\u0438\u0437\u0432\u0435\u0441\u0442\u043d\u044b\u043c, \u043f\u043e\u0436\u0435\u0440\u0442\u0432\u043e\u0432\u0430\u043d\u044b \u0432 \u0440\u0430\u0441\u043f\u043e\u0440\u044f\u0436\u0435\u043d\u0438\u0435\u003cbr\u003e\u043c\u0438\u043d\u0438\u0441\u0442\u0440\u0430 \u043d\u0430\u0440. \u043f\u0440\u043e\u0441\u0432\u0435\u0449\u0435\u043d\u0438\u044f \u0441\u0440\u0435\u0434\u0441\u0442\u0432\u0430 \u0434\u043b\u044f \u0443\u0447\u0440\u0435\u0436\u0434\u0435\u043d\u0438\u044f \u0434\u0432\u0443\u0445 \u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0439 \u0434\u043b\u044f\u003cbr\u003e\u043a\u0440\u0443\u0433\u043e\u0441\u0432\u0435\u0442\u043d\u044b\u0445 \u043f\u0443\u0442\u0435\u0448\u0435\u0441\u0442\u0432\u0438\u0439 \u043f\u043e 6,600 p. \u0421\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0438 \u043d\u0430\u0437\u043d\u0430\u0447\u0430\u044e\u0442\u0441\u044f \u043f\u043e\u003cbr\u003e\u0443\u0441\u043c\u043e\u0442\u0440\u0435\u043d\u0438\u044e \u043c\u0438\u043d\u0438\u0441\u0442\u0440\u0430 \u043d\u0430\u0440. \u043f\u0440\u043e\u0441\u0432\u0435\u0449\u0435\u043d\u0438\u044f \u0443\u0447\u0435\u043d\u0438\u043a\u0430\u043c \u0438\u0434\u0438 \u043f\u0440\u0435\u043f\u043e\u0434\u0430\u0432\u0430\u0442\u0435\u043b\u044f\u043c,\u003cbr\u003e\u0440\u0443\u0441\u0441\u043a\u0438\u043c \u043f\u043e\u0434\u0434\u0430\u043d\u043d\u044b\u043c \u043d\u0430 \u0441\u043e\u0432\u0435\u0440\u0448\u0435\u043d\u0438\u0435 \u043f\u0443\u0442\u0435\u0448\u0435\u0441\u0442\u0432\u0438\u044f \u043d\u0430 \u0441\u0440\u043e\u043a \u043d\u0435 \u043c\u0435\u043d\u0435\u0435 15\u003cbr\u003e\u043c\u0435\u0441\u044f\u0446\u0435\u0432, \u043f\u0440\u0438 \u0447\u0435\u043c \u0441\u043e\u0441\u0442\u0430\u0432\u043b\u0435\u043d\u0438\u0435 \u043c\u0430\u0440\u0448\u0440\u0443\u0442\u0430 \u043f\u0440\u0435\u0434\u043e\u0441\u0442\u0430\u0432\u043b\u044f\u0435\u0442\u0441\u044f \u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0430\u0442\u0430\u043c, \u0441\u003cbr\u003e\u0442\u0435\u043c, \u043e\u0434\u043d\u0430\u043a\u043e, \u0443\u0441\u043b\u043e\u0432\u0438\u0435\u043c, \u0447\u0442\u043e\u0431\u044b \u0432 \u044d\u0442\u043e\u0442 \u043c\u0430\u0440\u0448\u0440\u0443\u0442\u0430, \u0441\u043e\u0433\u043b\u0430\u0441\u043d\u043e \u0436\u0435\u043b\u0430\u043d\u0438\u044e\u003cbr\u003e\u0436\u0435\u0440\u0442\u0432\u043e\u0432\u0430\u0442\u0435\u043b\u044f, \u0432\u0445\u043e\u0434\u0438\u043b\u043e \u043f\u043e\u0441\u0435\u0449\u0435\u043d\u0438\u0435 \u0417\u0430\u043f\u0430\u0434\u043d\u043e\u0439 \u0415\u0432\u0440\u043e\u043f\u044b, \u0421\u043e\u0435\u0434.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1700\u003cbr\u003egrouping: 1700-1916\u003cbr\u003eidentifier: 1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5104-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": 674.2730738028888, "y": 11.098661351849088}, {"color": "blue", "date": "1700", "id": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5084-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u041e\u0431\u0430 \u043e\u0440\u0430\u0442\u043e\u0440\u0430 \u043d\u0435 \u043a\u0440\u0430\u0441\u043d\u0435\u044f, \u043f\u0440\u0435\u0434\u043b\u0430\u0433\u0430\u043b\u0438 \u043b\u0438\u0448\u0430\u0442\u044c \"\u043a\u0443\u0445\u0430\u0440\u043a\u0438\u043d\u044b\u0445 \u0434\u0435\u0442\u0435\u0439\"\u003cbr\u003e\u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0439\u003c/b\u003e \u0432 \u0441\u0440\u0435\u0434\u043d\u0438\u0445 \u0448\u043a\u043e\u043b\u0430\u0445.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1700\u003cbr\u003egrouping: 1700-1916\u003cbr\u003eidentifier: 1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5084-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": 1266.2064220484858, "y": -1.4901793158903516}, {"color": "blue", "date": "1700", "id": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5086-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u041a\u043e\u0433\u0434\u0430 \u0445\u043e\u0434\u0438\u043b\u0430 \u043f\u043e \u0433\u043e\u0440\u043e\u0434\u0443 \u043f\u043e\u0434\u043f\u0438\u0441\u043a\u0430 \u043d\u0430 \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044e\u003c/b\u003e \u043e\u0434\u043d\u043e\u043c\u0443\u003cbr\u003e\u044e\u043d\u043e\u0448\u0435, \u0431\u0435\u0437 \u0432\u0441\u044f\u043a\u0438\u0445 \u0441\u0440\u0435\u0434\u0441\u0442\u0432 \u0434\u043e\u0431\u0440\u0430\u0432\u0448\u0435\u043c\u0443\u0441\u044f \u0434\u043e \u0442\u0440\u0435\u0442\u044c\u0435\u0433\u043e \u0443\u043d\u0438\u0432\u0435\u0440\u0441\u0438\u0442\u0435\u0442\u0441\u043a\u043e\u0433\u043e\u003cbr\u003e\u043a\u0443\u0440\u0441\u0430, \u0430 \u043d\u0430 \u0442\u0440\u0435\u0442\u044c\u0435\u043c \u043a\u0443\u0440\u0441\u0435 \u0441\u0445\u0432\u0430\u0442\u0438\u0432\u0448\u0435\u043c\u0443 \u0433\u043e\u043b\u043e\u0434\u043d\u044b\u0439 \u0442\u0438\u0444, -- \u041f\u0440\u043e\u0442\u0430\u0441 \u043f\u043e\u0434\u043f\u0438\u0441\u0430\u043b\u003cbr\u003e\u043c\u0435\u043d\u0435\u0435 \u0432\u0441\u0435\u0445.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1700\u003cbr\u003egrouping: 1700-1916\u003cbr\u003eidentifier: 1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5086-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": -1961.3926363879286, "y": 657.5845452745455}, {"color": "blue", "date": "1700", "id": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5060-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0427\u0435\u0440\u0435\u0437 \u0433\u043e\u0434 \u043f\u043e\u0441\u043b\u0435 \u044d\u0442\u043e\u0433\u043e \u0434\u044f\u0434\u044f \u0421\u0435\u0440\u0433\u0435\u0439, \u043f\u043e \u043e\u043a\u043e\u043d\u0447\u0430\u043d\u0438\u0438 \u043a\u0443\u0440\u0441\u0430 \u0432\u003cbr\u003e\u0443\u043d\u0438\u0432\u0435\u0440\u0441\u0438\u0442\u0435\u0442\u0435, \u0431\u044b\u043b \u043f\u043e\u0441\u043b\u0430\u043d \"\u0437\u0430\u0441\u043b\u0443\u0436\u0438\u0432\u0430\u0442\u044c\" \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044e\u003c/b\u003e \u0432\u043e\u0435\u043d\u043d\u044b\u043c \u0432\u0440\u0430\u0447\u043e\u043c\u003cbr\u003e\u0432 \u041d\u043e\u0432\u0433\u043e\u0440\u043e\u0434, \u0430 \u0435\u0433\u043e \u0431\u043b\u0438\u0436\u0430\u0439\u0448\u0438\u0439 \u0434\u0440\u0443\u0433, \u043c\u043e\u0439 \u043f\u0440\u0435\u0436\u043d\u0438\u0439 \u0443\u0447\u0438\u0442\u0435\u043b\u044c, \u0431\u044b\u043b \u0432\u044b\u0441\u043b\u0430\u043d \"\u043d\u0430\u003cbr\u003e\u0432\u044b\u0441\u043b\u0443\u0433\u0443\" \u0432 \u0435\u0449\u0435 \u0431\u043e\u043b\u0435\u0435 \u0434\u0430\u043b\u044c\u043d\u044e\u044e \u043e\u0442 \u043d\u0430\u0441 \u0433\u0443\u0431\u0435\u0440\u043d\u0438\u044e.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1700\u003cbr\u003egrouping: 1700-1916\u003cbr\u003eidentifier: 1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5060-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": -320.523733447566, "y": -697.9022359716548}, {"color": "blue", "date": "1700", "id": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5102-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u042d-\u044d\u0445, \u043c\u0435\u043d\u044f \u043d\u043e \u0431\u044b\u043b\u043e \u0442\u0430\u043c, \u044f \u0431\u044b \u0440\u044f\u0432\u043a\u043d\u0443\u043b \u043f\u0440\u0435\u0434\u043b\u043e\u0436\u0435\u043d\u0438\u0435 \u0443\u0447\u0440\u0435\u0434\u0438\u0442\u044c\u003cbr\u003e\u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044e\u003c/b\u003e \u0432 \u0447\u0435\u0441\u0442\u044c \u0438\u043c\u0435\u043d\u0438 \u0438\u0441\u0442\u044f\u0437\u0430\u0442\u0435\u043b\u044f!..\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1700\u003cbr\u003egrouping: 1700-1916\u003cbr\u003eidentifier: 1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5102-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": 1020.6020340894133, "y": -63.47665836594798}, {"color": "blue", "date": "1700", "id": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5056-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u041c\u0435\u0436\u0434\u0443 \u0442\u0435\u043c \u0432\u043e\u0442 \u0443\u0436 \u0442\u0440\u0435\u0442\u0438\u0439 \u0433\u043e\u0434 \u043a\u0438\u0441\u043d\u0435\u0442 \u0442\u0443\u0442 \u0432 \u0422\u043e\u043c\u0438\u043b\u0438\u043d\u0441\u043a\u0435, \u0432\u003cbr\u003e\u0431\u043e\u043b\u044c\u043d\u0438\u0446\u0435, -- \u043e\u0442\u0441\u043b\u0443\u0436\u0438\u0432\u0430\u0435\u0442 \u0437\u0435\u043c\u0441\u043a\u0443\u044e \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044e\u003c/b\u003e.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1700\u003cbr\u003egrouping: 1700-1916\u003cbr\u003eidentifier: 1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5056-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": -104.26814150030269, "y": -987.029139088176}, {"color": "blue", "date": "1700", "id": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5046-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u042f \u0434\u0430\u0436\u0435 \u0443\u0441\u0442\u0440\u043e\u0438\u043b \u0438\u0437 \u043c\u043d\u0438\u043c\u043e \u043f\u0440\u043e\u0446\u0435\u043d\u0442\u043d\u044b\u0445 \u0434\u0435\u043d\u0435\u0433 \u043d\u0435\u0431\u043e\u043b\u044c\u0448\u0438\u0435\u003cbr\u003e\u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0438\u003c/b\u003e \u0441\u043b\u0435\u043f\u044b\u043c \u0438 \u0443\u0431\u043e\u0433\u0438\u043c \u0438\u0437 \u0431\u044b\u0432\u0448\u0438\u0445 \u0434\u0432\u043e\u0440\u043e\u0432\u044b\u0445.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1700\u003cbr\u003egrouping: 1700-1916\u003cbr\u003eidentifier: 1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5046-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": -382.8947808048229, "y": -348.1425596034066}, {"color": "blue", "date": "1700", "id": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5062-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0412\u0447\u0435\u0440\u0430 \u0443\u0442\u0440\u043e\u043c, \u043d\u0435\u043c\u0435\u0434\u043b\u0435\u043d\u043d\u043e \u043f\u043e\u0441\u043b\u0435 \u043f\u043e\u043b\u0443\u0447\u0435\u043d\u0438\u044f \u043c\u043e\u0441\u043a\u043e\u0432\u0441\u043a\u0438\u0445 \u0433\u0430\u0437\u0435\u0442 \u0441\u003cbr\u003e\u0440\u0435\u0447\u044c\u044e \u0412. \u0410. \u041c\u0430\u043a\u043b\u0430\u043a\u043e\u0432\u0430 \u043e \u043c\u0438\u043d\u0438\u0441\u0442\u0435\u0440\u0441\u0442\u0432\u0435 \u044e\u0441\u0442\u0438\u0446\u0438\u0438, \u0428\u0430\u0445\u043e\u0432 \u043f\u043e\u0436\u0435\u0440\u0442\u0432\u043e\u0432\u0430\u043b 6. 000\u003cbr\u003e\u0440\u0443\u0431. \u043d\u0430 \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044e\u003c/b\u003e \u0438\u043c\u0435\u043d\u0438 \u043c\u043e\u0441\u043a\u043e\u0432\u0441\u043a\u043e\u0433\u043e \u0434\u0435\u043f\u0443\u0442\u0430\u0442\u0430.\u003cbr\u003e\u043d\u0435\u0438\u0437\u0432\u0435\u0441\u0442\u043d\u044b\u0439.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1700\u003cbr\u003egrouping: 1700-1916\u003cbr\u003eidentifier: 1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5062-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": 1325.8300727754956, "y": 1535.684527010371}, {"color": "blue", "date": "1700", "id": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5058-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u041e\u043d \u043f\u043e\u0436\u0435\u0440\u0442\u0432\u043e\u0432\u0430\u043b \u0443\u043d\u0438\u0432\u0435\u0440\u0441\u0438\u0442\u0435\u0442\u0443 \u0434\u0435\u0441\u044f\u0442\u044c \u0442\u044b\u0441\u044f\u0447 \u0440\u0443\u0431\u043b\u0435\u0439, \u0447\u0442\u043e\u0431\u044b \u0438\u0437\u003cbr\u003e\u043f\u0440\u043e\u0446\u0435\u043d\u0442\u043e\u0432 \u0443\u0447\u0440\u0435\u0434\u0438\u0442\u044c \u0434\u0432\u0435 \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0438\u003c/b\u003e \u0432 \u043f\u043e\u043b\u044c\u0437\u0443 \u0431\u0435\u0434\u043d\u044b\u0445 \u0441\u0442\u0443\u0434\u0435\u043d\u0442\u043e\u0432,\u003cbr\u003e\u043a\u043e\u0442\u043e\u0440\u044b\u0435 \u0432\u044b\u043a\u0430\u0436\u0443\u0442 \u043e\u0441\u043e\u0431\u0435\u043d\u043d\u044b\u0435 \u0441\u043f\u043e\u0441\u043e\u0431\u043d\u043e\u0441\u0442\u0438 \u0438 \u0436\u0435\u043b\u0430\u043d\u0438\u0435 \u0437\u0430\u043d\u044f\u0442\u044c\u0441\u044f \u0438\u0437\u0443\u0447\u0435\u043d\u0438\u0435\u043c\u003cbr\u003e\u0440\u0443\u0441\u0441\u043a\u043e\u0433\u043e \u044f\u0437\u044b\u043a\u0430 \u0438 \u0440\u0443\u0441\u0441\u043a\u043e\u0439 \u0438\u0441\u0442\u043e\u0440\u0438\u0438.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1700\u003cbr\u003egrouping: 1700-1916\u003cbr\u003eidentifier: 1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5058-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": 996.9991428550666, "y": -1410.4113731292684}, {"color": "blue", "date": "1700", "id": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5052-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u041d\u0435\u043a\u043e\u0442\u043e\u0440\u044b\u0435 \u0432\u0438\u0434\u044b \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0439\u003c/b\u003e, \u043f\u043e \u043c\u043e\u0435\u043c\u0443 \u043c\u043d\u0435\u043d\u0438\u044e, \u0434\u043e\u043b\u0436\u043d\u044b \u0431\u044b\u0442\u044c\u003cbr\u003e\u043d\u0430\u0437\u043d\u0430\u0447\u0430\u0435\u043c\u044b \u0442\u043e\u043b\u044c\u043a\u043e \u043b\u0438\u0446\u0430\u043c, \u0432\u044b\u0434\u0435\u0440\u0436\u0430\u0432\u0448\u0438\u043c \u043f\u0435\u0440\u0432\u043e\u0435 \u0438\u043b\u0438 \u043e\u0441\u043d\u043e\u0432\u043d\u043e\u0435 \u0438\u0441\u043f\u044b\u0442\u0430\u043d\u0438\u0435,\u003cbr\u003e\u043d\u043e, \u043a\u043e\u043d\u0435\u0447\u043d\u043e, \u0438 \u0432 \u0441\u0430\u043c\u043e\u043c \u043d\u0430\u0447\u0430\u043b\u0435 \u043f\u0440\u043e\u0445\u043e\u0436\u0434\u0435\u043d\u0438\u044f \u043a\u0443\u0440\u0441\u043e\u0432 \u043f\u043e\u0441\u043e\u0431\u0438\u0435 \u0432\u043e \u043c\u043d\u043e\u0433\u0438\u0445\u003cbr\u003e\u0441\u043b\u0443\u0447\u0430\u044f\u0445 \u0432\u043f\u043e\u043b\u043d\u0435 \u043d\u0435\u043e\u0431\u0445\u043e\u0434\u0438\u043c\u043e, \u0432 \u043e\u0441\u043e\u0431\u0435\u043d\u043d\u043e\u0441\u0442\u0438 \u043f\u043e\u0442\u043e\u043c\u0443 \u0447\u0442\u043e \u0443 \u043d\u0430\u0441 (\u044f \u0434\u0443\u043c\u0430\u044e, \u0432\u003cbr\u003e\u0431\u043e\u043b\u044c\u0448\u0435\u0439 \u043c\u0435\u0440\u0435, \u0447\u0435\u043c \u0433\u0434\u0435-\u043d\u0438\u0431\u0443\u0434\u044c) \u043e\u0447\u0435\u043d\u044c \u0447\u0430\u0441\u0442\u043e \u0432\u0441\u0442\u0440\u0435\u0447\u0430\u044e\u0442\u0441\u044f \u0441\u043f\u043e\u0441\u043e\u0431\u043d\u044b\u0435 \u044e\u043d\u043e\u0448\u0438\u003cbr\u003e\u0438\u043c\u0435\u043d\u043d\u043e \u0432 \u0442\u0435\u0445 \u043a\u043b\u0430\u0441\u0441\u0430\u0445 \u043e\u0431\u0449\u0435\u0441\u0442\u0432\u0430, \u043a\u043e\u0442\u043e\u0440\u044b\u0435 \u043e\u0431\u043b\u0430\u0434\u0430\u044e\u0442 \u043d\u0430\u0438\u043c\u0435\u043d\u044c\u0448\u0438\u043c \u0434\u043e\u0441\u0442\u0430\u0442\u043a\u043e\u043c,\u003cbr\u003e\u0442\u0430\u043a \u043a\u0430\u043a \u043e\u043d\u0438 \u0441\u0442\u043e\u044f\u0442 \u0437\u0430\u0447\u0430\u0441\u0442\u0443\u044e \u0431\u043b\u0438\u0436\u0435 \u043a \u043f\u0440\u0438\u0440\u043e\u0434\u0435 \u0438 \u0432\u0441\u0435\u0439 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0442\u0435\u043b\u044c\u043d\u043e\u0441\u0442\u0438,\u003cbr\u003e\u043f\u043e\u043a\u0430\u0437\u044b\u0432\u0430\u044e\u0449\u0435\u0439 \u0432\u0441\u044e \u043d\u0443\u0436\u0434\u0443 \u0432 \u0432\u044b\u0441\u0448\u0435\u043c \u043e\u0431\u0440\u0430\u0437\u043e\u0432\u0430\u043d\u0438\u0438, \u0447\u0435\u043c \u0442\u043e \u0431\u044b\u0432\u0430\u0435\u0442 \u0443 \u0434\u0435\u0442\u0435\u0439\u003cbr\u003e\u0441\u043e\u0441\u0442\u043e\u044f\u0442\u0435\u043b\u044c\u043d\u044b\u0445 \u0440\u043e\u0434\u0438\u0442\u0435\u043b\u0435\u0439, \u043a\u0430\u043a \u0432\u0438\u0434\u043d\u043e \u044d\u0442\u043e \u0443\u0436\u0435 \u0438\u0437 \u043f\u0440\u0438\u043c\u0435\u0440\u0430 \u043f\u0435\u0440\u0432\u043e\u0433\u043e \u0440\u0443\u0441\u0441\u043a\u043e\u0433\u043e\u003cbr\u003e\u0443\u0447\u0435\u043d\u043e\u0433\u043e \u041b\u043e\u043c\u043e\u043d\u043e\u0441\u043e\u0432\u0430.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1700\u003cbr\u003egrouping: 1700-1916\u003cbr\u003eidentifier: 1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5052-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": 396.85971239443967, "y": -864.421065448526}, {"color": "blue", "date": "1700", "id": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5050-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0422\u0430\u043a\u0438\u043c \u043e\u0431\u0440\u0430\u0437\u043e\u043c, \u044d\u0442\u0438\u043c \u043c\u043e\u043b\u043e\u0434\u044b\u043c \u043b\u044e\u0434\u044f\u043c \"\u0431\u044b\u043b\u0430 \u0435\u0449\u0435 \u0440\u0430\u0437 \u043f\u0440\u0435\u0434\u043e\u0441\u0442\u0430\u0432\u043b\u0435\u043d\u0430\u003cbr\u003e\u0432\u043e\u0437\u043c\u043e\u0436\u043d\u043e\u0441\u0442\u044c \u0432\u043e\u0437\u0432\u0440\u0430\u0442\u0438\u0442\u044c\u0441\u044f \u043a \u043f\u043e\u0440\u044f\u0434\u043a\u0443 \u0438 \u0438\u0441\u043f\u043e\u043b\u043d\u0435\u043d\u0438\u044e \u0434\u043e\u043b\u0433\u0430\", \u043f\u043e\u0434\u0432\u0435\u0440\u0433\u0448\u0438\u0441\u044c\u003cbr\u003e\u043b\u0435\u0433\u043a\u043e\u043c\u0443 \u043d\u0430\u043a\u0430\u0437\u0430\u043d\u0438\u044e, \u043d\u043e, \u0441 \u0434\u0440\u0443\u0433\u043e\u0439 \u0441\u0442\u043e\u0440\u043e\u043d\u044b, \u0430\u0433\u0438\u0442\u0438\u0440\u043e\u0432\u0430\u0432\u0448\u0438\u0435 \u0434\u043e\u043b\u0436\u043d\u044b \u0431\u044b\u043b\u0438\u003cbr\u003e\u0432\u0438\u0434\u0435\u0442\u044c, \u0447\u0442\u043e \u043f\u043e\u0441\u0442\u0430\u043d\u043e\u0432\u043b\u0435\u043d\u0438\u0435 \u0441\u043e\u0432\u0435\u0442\u0430 \u043e\u0442\u043c\u0435\u043d\u0435\u043d\u043e \u0431\u044b\u0442\u044c \u043d\u0435 \u043c\u043e\u0436\u0435\u0442, \u0447\u0442\u043e \u0432 \u0441\u043b\u0443\u0447\u0430\u0435\u003cbr\u003e\u0434\u0430\u043b\u044c\u043d\u0435\u0439\u0448\u0435\u0433\u043e \u0443\u043f\u043e\u0440\u0441\u0442\u0432\u0430 \u043e\u043d\u0438 \u043f\u043e\u0434\u0432\u043e\u0434\u044f\u0442 \u0432\u0441\u0435\u0445 \u0441\u0432\u043e\u0438\u0445 \u0442\u043e\u0432\u0430\u0440\u0438\u0449\u0435\u0439 \u043f\u043e\u0434 \u0431\u043e\u043b\u044c\u0448\u0443\u044e\u003cbr\u003e\u043d\u0435\u043f\u0440\u0438\u044f\u0442\u043d\u043e\u0441\u0442\u044c, \u0430 \u043f\u043e\u043b\u0443\u0447\u0430\u044e\u0449\u0438\u0445 \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0438\u003c/b\u003e \u043b\u0438\u0448\u0430\u044e\u0442 \u043a\u0443\u0441\u043a\u0430 \u0445\u043b\u0435\u0431\u0430.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1700\u003cbr\u003egrouping: 1700-1916\u003cbr\u003eidentifier: 1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5050-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": 796.8385013467948, "y": 646.0825134055121}, {"color": "blue", "date": "1700", "id": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5048-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0422\u0440\u0435\u0442\u044c\u0438 \u0437\u0430\u044f\u0432\u043b\u044f\u043b\u0438, \u0447\u0442\u043e \u0445\u043e\u0440\u043e\u0448\u043e \u0431\u044b \u0431\u044b\u043b\u043e \u0430\u0434\u0440\u0435\u0441 \u0431\u043b\u0430\u0433\u043e\u0434\u0430\u0440\u0441\u0442\u0432\u0435\u043d\u043d\u044b\u0439 \u0438\u043b\u0438\u003cbr\u003e\u0445\u043e\u0442\u044c \u043f\u0440\u0438\u0437\u043d\u0430\u0442\u0435\u043b\u044c\u043d\u044b\u0439 \u043f\u0440\u0435\u0434\u0441\u0442\u0430\u0432\u0438\u0442\u044c \u0431\u0430\u0440\u043e\u043d\u0443 \u0438 \u043e\u0441\u043d\u043e\u0432\u0430\u0442\u044c \u0432 \u0447\u0435\u0441\u0442\u044c \u0435\u0433\u043e \u043a\u0430\u043a\u0443\u044e-\u003cbr\u003e\u043d\u0438\u0431\u0443\u0434\u044c \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044e\u003c/b\u003e.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1700\u003cbr\u003egrouping: 1700-1916\u003cbr\u003eidentifier: 1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5048-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": 221.1003477492716, "y": -1203.0814549074782}, {"color": "blue", "date": "1918", "id": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5069-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0416\u0438\u043b \u0413\u0440\u0438\u0433\u043e\u0440\u0438\u0439 \u043d\u0430 \u043f\u0435\u043d\u0441\u0438\u044e \u043f\u043e \u0438\u043d\u0432\u0430\u043b\u0438\u0434\u043d\u043e\u0441\u0442\u0438 (\u0447\u0442\u043e--\u0442\u043e \u043f\u043e \u043f\u0441\u0438\u0445\u0438\u0447\u0435\u0441\u043a\u043e\u0439\u003cbr\u003e\u043b\u0438\u043d\u0438\u0438), \u0435\u0434\u0432\u0430 \u043f\u0440\u0435\u0432\u044b\u0448\u0430\u044e\u0449\u0443\u044e \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044e\u003c/b\u003e \u0432\u0442\u043e\u0440\u043e\u043a\u0443\u0440\u0441\u043d\u0438\u043a\u0430 (\u044d\u0442\u0438\u043c\u003cbr\u003e\u043e\u0431\u044a\u044f\u0441\u043d\u044f\u043b\u0438\u0441\u044c \u0438 \u0442\u0430\u0437\u044b \u0441 \u0431\u0435\u043b\u044c\u0435\u043c), \u0434\u0430 \u0435\u0449\u0435 \u0443\u0445\u0438\u0442\u0440\u044f\u043b\u0441\u044f \u043f\u043e\u043a\u0443\u043f\u0430\u0442\u044c \u043a\u043d\u0438\u0433\u0438.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1918\u003cbr\u003egrouping: 1918-1990\u003cbr\u003eidentifier: 1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5069-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": -773.5323129256634, "y": -128.54001343074174}, {"color": "blue", "date": "1918", "id": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5059-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0415\u0441\u043b\u0438 \u043f\u0435\u0440\u0435\u0432\u0435\u0441\u0442\u0438 \"\u043e\u0431\u044f\u0437\u0430\u0442\u0435\u043b\u044c\u0441\u0442\u0432\u0430\" \u041e\u043c\u0441\u043a\u043e\u0433\u043e \u0442\u0435\u0440\u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u044f \u043d\u0430 \u044f\u0437\u044b\u043a\u003cbr\u003e\u0446\u0438\u0444\u0440, \u0442\u043e \u044d\u0442\u043e \u0432\u044b\u0440\u0430\u0437\u0438\u0442\u0441\u044f: \u0432 \u043e\u043f\u043b\u0430\u0442\u0435 \u0441\u0443\u043c\u043c\u044b 22 500 \u0440\u0443\u0431\u043b\u0435\u0439 \u0438 \u0433\u043e\u0434\u043e\u0432\u043e\u0433\u043e\u003cbr\u003e\u0441\u043e\u0434\u0435\u0440\u0436\u0430\u043d\u0438\u044f \u041a\u0443\u043f\u0440\u0438\u044f\u043d\u043e\u0432\u0430 (\u0442\u0430\u043a \u0441\u043a\u0430\u0437\u0430\u0442\u044c, \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f\u003c/b\u003e) \u0432 \u0441\u0443\u043c\u043c\u0435 18 720\u003cbr\u003e\u0440\u0443\u0431\u043b\u0435\u0439, \u0432\u0441\u0435\u0433\u043e 41220 \u0440\u0443\u0431\u043b\u0435\u0439.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1918\u003cbr\u003egrouping: 1918-1990\u003cbr\u003eidentifier: 1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5059-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": 958.242550931827, "y": -1423.7616828806651}, {"color": "blue", "date": "1918", "id": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5071-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u041e\u0447\u0435\u043d\u044c \u043f\u0440\u043e\u0441\u0438\u043c \u0440\u0430\u0437\u044a\u044f\u0441\u043d\u0438\u0442\u044c, \u043a\u0430\u043a\u043e\u0432\u0430 \u0440\u043e\u043b\u044c \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0430\u043b\u044c\u043d\u044b\u0445\u003c/b\u003e\u003cbr\u003e\u043a\u043e\u043c\u0438\u0441\u0441\u0438\u0439 \u043f\u0440\u0438 \u043d\u0430\u0437\u043d\u0430\u0447\u0435\u043d\u0438\u0438 \u043d\u0430 \u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044e.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1918\u003cbr\u003egrouping: 1918-1990\u003cbr\u003eidentifier: 1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5071-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": -1608.6349520978354, "y": -15.446084435672574}, {"color": "blue", "date": "1918", "id": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5103-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u042f\u0441\u043d\u043e\u0435 \u0434\u0435\u043b\u043e, \u043d\u0430 \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044e\u003c/b\u003e \u0432 \u043d\u0430\u0448\u0435 \u0432\u0440\u0435\u043c\u044f \u043d\u0435 \u043f\u0440\u043e\u0436\u0438\u0432\u0435\u0448\u044c, \u0438\u003cbr\u003e\u0410\u043b\u0435\u0448\u0430 \u043f\u043e\u0448\u0435\u043b \u0440\u0430\u0431\u043e\u0442\u0430\u0442\u044c \u043d\u0430 \"\u0421\u043a\u043e\u0440\u0443\u044e \u043f\u043e\u043c\u043e\u0449\u044c\" -- \u0442\u0440\u0438 \u043d\u043e\u0447\u0438 \u0432 \u043d\u0435\u0434\u0435\u043b\u044e.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1918\u003cbr\u003egrouping: 1918-1990\u003cbr\u003eidentifier: 1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5103-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": 1047.523934363715, "y": -94.88069018412511}, {"color": "blue", "date": "1918", "id": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5085-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0421\u043e\u0432\u0441\u0435\u043c \u043e\u0442\u043a\u0430\u0437\u044b\u0432\u0430\u0442\u044c \u043f\u043e \u0442\u043e\u043c\u0443 \u0432\u0440\u0435\u043c\u0435\u043d\u0438 \u0443\u0436\u0435 \u0431\u044b\u043b\u043e \u043d\u0435\u043b\u044c\u0437\u044f, \u0442\u0430\u043a \u043a\u0430\u043a \u0432\u003cbr\u003e\u0423\u0440\u0430\u043b\u044c\u0441\u043a\u043e\u043c \u0433\u043e\u0440\u043d\u043e\u043c \u0443\u0447\u0438\u043b\u0438\u0449\u0435 \u0438 \u0432 \u041a\u0443\u043d\u0433\u0443\u0440\u0441\u043a\u043e\u043c \u0442\u0435\u0445\u043d\u0438\u0447\u0435\u0441\u043a\u043e\u043c \u0438\u043c\u0435\u043b\u043e\u0441\u044c \u043d\u0435\u0441\u043a\u043e\u043b\u044c\u043a\u043e\u003cbr\u003e\u0437\u0430\u0432\u043e\u0434\u0441\u043a\u0438\u0445 \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0439\u003c/b\u003e.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1918\u003cbr\u003egrouping: 1918-1990\u003cbr\u003eidentifier: 1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5085-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": 1294.4219146016753, "y": 28.25125192035913}, {"color": "blue", "date": "1918", "id": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5073-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u041a\u043e\u043c\u043c\u0443\u043d\u0430 \u0431\u044b\u043b\u0430 \u0431\u043e\u043b\u044c\u0448\u0430\u044f, \u0447\u0435\u043b\u043e\u0432\u0435\u043a \u0434\u0432\u0435\u0441\u0442\u0438, \u0441\u043e \u0441\u0432\u043e\u0435\u0439 \u0445\u043e\u0437\u044f\u0439\u0441\u0442\u0432\u0435\u043d\u043d\u043e\u0439 \u0438\u003cbr\u003e\u0441\u0442\u043e\u043b\u043e\u0432\u043e\u0439 \u043a\u043e\u043c\u0438\u0441\u0441\u0438\u0435\u0439 \u0438 \u0441\u043e \u0441\u0432\u043e\u0438\u043c \u043a\u0430\u0437\u043d\u0430\u0447\u0435\u0435\u043c, \u043a\u043e\u0442\u043e\u0440\u043e\u043c\u0443 \u043a\u0430\u0436\u0434\u044b\u0439 \u043c\u0435\u0441\u044f\u0446 \u043c\u044b\u003cbr\u003e\u043e\u0442\u0434\u0430\u0432\u0430\u043b\u0438 \u0441\u0432\u043e\u0438 \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0438\u003c/b\u003e, \u043e\u0441\u0442\u0430\u0432\u043b\u044f\u044f \u0441\u0435\u0431\u0435 \u043f\u043e\u043b\u0442\u043e\u0440\u0430 \u0440\u0443\u0431\u043b\u044f: \u043d\u0435 \u043d\u0430\u003cbr\u003e\u0442\u0440\u0430\u043c\u0432\u0430\u0439: \u043c\u044b \u0435\u0437\u0434\u0438\u043b\u0438 \u0437\u0430\u0439\u0446\u0430\u043c\u0438 -- \u0430 \u043d\u0430 \"\u0447\u0430\u0439\u043d\u043e\u0435 \u0434\u043e\u0432\u043e\u043b\u044c\u0441\u0442\u0432\u0438\u0435\", \u0438\u043b\u0438, \u043a\u0430\u043a\u003cbr\u003e\u0448\u0443\u0442\u0438\u043b\u0438 \u0441\u0442\u0443\u0434\u0435\u043d\u0442\u044b, \"\u043e\u0442\u0447\u0430\u044f\u043d\u043d\u043e\u0435 \u0443\u0434\u043e\u0432\u043e\u043b\u044c\u0441\u0442\u0432\u0438\u0435\", \u0441\u043e\u0441\u0442\u043e\u044f\u0432\u0448\u0435\u0435 \u0438\u0437 \u0432\u0430\u043d\u0438\u043b\u044c\u043d\u044b\u0445\u003cbr\u003e\u043f\u0430\u043b\u043e\u0447\u0435\u043a, \u043f\u043e\u043a\u0443\u043f\u0430\u0432\u0448\u0438\u0445\u0441\u044f \u0432 \u0431\u0443\u043b\u043e\u0447\u043d\u043e\u0439 \u043d\u0430 \u0411\u043e\u043b\u044c\u0448\u043e\u043c \u043f\u0440\u043e\u0441\u043f\u0435\u043a\u0442\u0435.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1918\u003cbr\u003egrouping: 1918-1990\u003cbr\u003eidentifier: 1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5073-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": 104.60273673847765, "y": 987.144218917891}, {"color": "blue", "date": "1918", "id": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5075-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0420\u0435\u0447\u044c \u043f\u043e\u0439\u0434\u0435\u0442 \u043e \u0432\u043e\u043f\u0440\u043e\u0441\u0430\u0445 \u043c\u0430\u0442\u0435\u0440\u0438\u0430\u043b\u044c\u043d\u043e\u0433\u043e \u043f\u043e\u043b\u043e\u0436\u0435\u043d\u0438\u044f \u0441\u0442\u0443\u0434\u0435\u043d\u0442\u043e\u0432, \u043e\u003cbr\u003e\u0441\u043d\u044f\u0442\u0438\u0438 \u0441\u043e \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0438\u003c/b\u003e \u0437\u0430 \u043f\u0440\u043e\u0433\u0443\u043b\u044b \u0438 \u0434\u0438\u0441\u0446\u0438\u043f\u043b\u0438\u043d\u0430\u0440\u043d\u044b\u0435 \u043f\u0440\u043e\u0441\u0442\u0443\u043f\u043a\u0438, \u043e\u003cbr\u003e\u0441\u0442\u0443\u0434\u0435\u043d\u0447\u0435\u0441\u043a\u043e\u0439 \u0441\u0435\u043c\u044c\u0435, \u043e \u0442\u043e\u043c, \u0447\u0442\u043e \u043c\u043e\u0436\u0435\u0442 \u0438 \u0434\u043e\u043b\u0436\u0435\u043d \u0434\u0435\u043b\u0430\u0442\u044c \u043a\u043e\u043c\u0441\u043e\u043c\u043e\u043b \u0432\u0443\u0437\u0430 \u0438\u003cbr\u003e\u0447\u0435\u0433\u043e \u043d\u0435 \u0434\u043e\u043b\u0436\u043d\u044b \u0434\u0435\u043b\u0430\u0442\u044c \u0435\u0433\u043e \u0440\u0443\u043a\u043e\u0432\u043e\u0434\u0438\u0442\u0435\u043b\u0438.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1918\u003cbr\u003egrouping: 1918-1990\u003cbr\u003eidentifier: 1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5075-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": 1126.2041593980978, "y": 853.5433077740606}, {"color": "blue", "date": "1918", "id": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5057-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0415\u0441\u043b\u0438 \u0432\u0437\u044f\u0442\u044c \u0442\u043e\u043b\u044c\u043a\u043e \u0434\u0432\u0435 \u0433\u0440\u0443\u043f\u043f\u044b \u0433\u0440\u0443\u043d\u0442\u043e\u0432\u0435\u0434\u043e\u0432 \u043a\u043e\u043b\u0438\u0447\u0435\u0441\u0442\u0432\u043e\u043c 40\u003cbr\u003e\u0447\u0435\u043b\u043e\u0432\u0435\u043a, \u0442\u043e \u0443\u0432\u0438\u0434\u0438\u043c, \u0447\u0442\u043e \u043d\u0430 \u043f\u0440\u043e\u0442\u044f\u0436\u0435\u043d\u0438\u0438 5 \u043b\u0435\u0442 \u043e\u0431\u0443\u0447\u0435\u043d\u0438\u044f, \u0432\u0441\u0435 40 \u0447\u0435\u043b\u043e\u0432\u0435\u043a\u003cbr\u003e\u043f\u043e\u043b\u0443\u0447\u0430\u044e\u0442 \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044e\u003c/b\u003e, \u043d\u0443\u0436\u0434\u0430\u044e\u0449\u0438\u0435\u0441\u044f \u0436\u0438\u0432\u0443\u0442 \u0432 \u043e\u0431\u0449\u0435\u0436\u0438\u0442\u0438\u044f\u0445.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1918\u003cbr\u003egrouping: 1918-1990\u003cbr\u003eidentifier: 1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5057-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": -123.33924837988312, "y": -1024.6587088975266}, {"color": "blue", "date": "1918", "id": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5077-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0412\u043e \u0432\u0440\u0435\u043c\u044f \u043c\u043e\u0435\u0433\u043e \u0434\u0435\u0442\u0441\u0442\u0432\u0430 \u044d\u0442\u043e \u0431\u044b\u043b\u0438 \u0431\u0435\u0434\u043d\u044b\u0435 \u043c\u0435\u0441\u0442\u0430, \u043a\u0440\u0435\u0441\u0442\u044c\u044f\u043d\u0435 \u0436\u0438\u043b\u0438 \u0432\u003cbr\u003e\u043d\u0438\u0449\u0435\u0442\u0435, \u0437\u0435\u043c\u043b\u044f \u0440\u043e\u0436\u0430\u043b\u0430 \u043f\u043b\u043e\u0445\u043e, \u0436\u0435\u043b\u0435\u0437\u043d\u0430\u044f \u0434\u043e\u0440\u043e\u0433\u0430 \u043f\u0440\u043e\u0445\u043e\u0434\u0438\u043b\u0430 \u0432 \u0434\u0435\u0432\u044f\u043d\u043e\u0441\u0442\u0430\u003cbr\u003e\u0432\u043e\u0441\u044c\u043c\u0438 \u0432\u0435\u0440\u0441\u0442\u0430\u0445 \u043e\u0442 \u0443\u0441\u0430\u0434\u044c\u0431\u044b, \u0438 \u0432 \u0434\u0435\u0442\u0441\u0442\u0432\u0435 \u044f \u0442\u043e\u043b\u044c\u043a\u043e \u0438 \u0441\u043b\u044b\u0448\u0430\u043b\u0430, \u0447\u0442\u043e \u0434\u0435\u0434\u003cbr\u003e\u043a\u0440\u0435\u0441\u0442\u0438\u0442 \u0443 \u043a\u0440\u0435\u0441\u0442\u044c\u044f\u043d, \u0432\u044b\u0445\u043b\u043e\u043f\u0430\u0442\u044b\u0432\u0430\u0435\u0442 \u0441\u043f\u043e\u0441\u043e\u0431\u043d\u044b\u043c \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0438\u003c/b\u003e \u0432 \u0443\u0435\u0437\u0434\u043d\u0443\u044e\u003cbr\u003e\u043f\u0440\u043e\u0433\u0438\u043c\u043d\u0430\u0437\u0438\u044e, \u0443\u0441\u0442\u0440\u0430\u0438\u0432\u0430\u0435\u0442 \u043a\u043e\u0433\u043e-\u0442\u043e \u0432 \u0431\u043e\u043b\u044c\u043d\u0438\u0446\u0443 \u0432 \u0433\u0443\u0431\u0435\u0440\u043d\u0441\u043a\u043e\u043c \u0433\u043e\u0440\u043e\u0434\u0435,\u003cbr\u003e\u043f\u0440\u0438\u0433\u043b\u0430\u0448\u0430\u0435\u0442 \u0432 \u0432\u043e\u043b\u043e\u0441\u0442\u044c \u043d\u043e\u0432\u043e\u0433\u043e \u0444\u0435\u043b\u044c\u0434\u0448\u0435\u0440\u0430, \u0433\u043e\u043d\u0438\u0442 \u0441\u043f\u0438\u0432\u0448\u0435\u0433\u043e\u0441\u044f \u043f\u043e\u043f\u0430 \u0438\u0437\u003cbr\u003e\u0441\u043e\u0441\u0435\u0434\u043d\u0435\u0433\u043e \u0441\u0435\u043b\u0430.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1918\u003cbr\u003egrouping: 1918-1990\u003cbr\u003eidentifier: 1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5077-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": -796.2312776966667, "y": -1011.3570456105297}, {"color": "blue", "date": "1918", "id": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5079-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0414\u0435\u043d\u044c\u0433\u0438 \u0432\u044b\u0448\u043b\u0438, \u0430 \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0438\u003c/b\u003e \u043d\u0435 \u0431\u044b\u043b\u043e.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1918\u003cbr\u003egrouping: 1918-1990\u003cbr\u003eidentifier: 1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5079-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": -1101.4869791795215, "y": -276.385472952814}, {"color": "blue", "date": "1918", "id": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5055-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0423\u0437\u043d\u0430\u0432 \u043e\u0442 \u041a\u043e\u0437\u043b\u043e\u0432\u0430 \u043e \u043c\u043e\u0435\u043c \u0436\u0435\u043b\u0430\u043d\u0438\u0438 \u0441\u043f\u0435\u0446\u0438\u0430\u043b\u0438\u0437\u0438\u0440\u043e\u0432\u0430\u0442\u044c\u0441\u044f \u043f\u043e\u003cbr\u003e\u0444\u0438\u043b\u043e\u0441\u043e\u0444\u0438\u0438, \u043e\u043d \u043f\u043e\u0436\u0435\u043b\u0430\u043b \u043f\u043e\u043c\u043e\u0447\u044c \u043c\u043d\u0435 \u0434\u043e\u0441\u0442\u0430\u0442\u044c \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044e\u003c/b\u003e \u043d\u0430 \u0418\u0441\u0442\u043e\u0440\u0438\u043a\u043e-\u003cbr\u003e\u0444\u0438\u043b\u043e\u043b\u043e\u0433\u0438\u0447\u0435\u0441\u043a\u043e\u043c \u0444\u0430\u043a\u0443\u043b\u044c\u0442\u0435\u0442\u0435 \u0438 \u043f\u043e\u0435\u0445\u0430\u043b \u043a \u0440\u0435\u043a\u0442\u043e\u0440\u0443 \u0443\u043d\u0438\u0432\u0435\u0440\u0441\u0438\u0442\u0435\u0442\u0430, \u043a\u0430\u0436\u0435\u0442\u0441\u044f,\u003cbr\u003e\u043f\u0440\u043e\u0444\u0435\u0441\u0441\u043e\u0440\u0443 \u041d\u0438\u043a\u0438\u0442\u0438\u043d\u0443.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1918\u003cbr\u003egrouping: 1918-1990\u003cbr\u003eidentifier: 1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5055-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": -89.01395142381072, "y": 715.3971449686018}, {"color": "blue", "date": "1918", "id": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5067-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0418 \u0432 \u043f\u043e\u0441\u043b\u0435\u0434\u0443\u044e\u0449\u0438\u0435 \u0433\u043e\u0434\u044b \u043e\u043d\u0430 \u0431\u0443\u0434\u0435\u0442 \u0432\u0440\u0443\u0447\u0430\u0442\u044c\u0441\u044f \u043a\u0430\u043a \u043d\u0430\u043f\u0443\u0442\u0441\u0442\u0432\u0438\u0435\u003cbr\u003e\u043a\u0430\u0436\u0434\u043e\u043c\u0443, \u043a\u0442\u043e \u043f\u043e\u043b\u0443\u0447\u0438\u0442 \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044e\u003c/b\u003e \u041a\u0440\u0438\u0441\u0442\u0438\u0430\u043d\u0430.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1918\u003cbr\u003egrouping: 1918-1990\u003cbr\u003eidentifier: 1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5067-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": -781.189021824525, "y": 1156.729005398966}, {"color": "blue", "date": "1918", "id": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5081-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0412 \u044d\u0442\u043e\u043c \u0441\u043b\u0443\u0447\u0430\u0435 \u043c\u0435\u0445\u0430\u043d\u0438\u0437\u043c \u0440\u0430\u0441\u043f\u0440\u0435\u0434\u0435\u043b\u0435\u043d\u0438\u044f \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0438\u003c/b\u003e\u003cbr\u003e\u0442\u0430\u043a\u043e\u0432.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1918\u003cbr\u003egrouping: 1918-1990\u003cbr\u003eidentifier: 1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5081-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": -53.36445800755, "y": -1936.8137712538419}, {"color": "blue", "date": "1918", "id": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5099-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u041a\u043e\u0433\u0434\u0430 \u043f\u043e\u044f\u0432\u0438\u043b\u0438\u0441\u044c \u0431\u043e\u043b\u0435\u0435 \u0441\u043e\u043b\u0438\u0434\u043d\u044b\u0435 \u0441\u0440\u0435\u0434\u0441\u0442\u0432\u0430 -- \u043e\u043a\u0430\u0437\u044b\u0432\u0430\u043b\u0430 \u043f\u043e\u043c\u043e\u0449\u044c\u003cbr\u003e\u0440\u043e\u0434\u043d\u044b\u043c, \u0437\u043d\u0430\u043a\u043e\u043c\u044b\u043c, \u0432\u044b\u0434\u0435\u043b\u044f\u043b\u0430 \u0441\u0443\u043c\u043c\u044b \u043d\u0430 \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0438\u003c/b\u003e \u0434\u043b\u044f \u043f\u043e\u043b\u044c\u0441\u043a\u0438\u0445\u003cbr\u003e\u0441\u0442\u0443\u0434\u0435\u043d\u0442\u043e\u0432 \u0421\u043e\u0440\u0431\u043e\u043d\u043d\u044b.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1918\u003cbr\u003egrouping: 1918-1990\u003cbr\u003eidentifier: 1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5099-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": 349.5301817930887, "y": -21.103599984464285}, {"color": "blue", "date": "1918", "id": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5083-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0415\u0441\u043b\u0438 \u043e\u043d\u0430 \u0436\u0438\u0432\u0435\u0442 \u0432 \u043f\u0440\u0435\u0434\u0435\u043b\u0430\u0445, \u0434\u043e\u0441\u0442\u0443\u043f\u043d\u044b\u0445 \u0434\u043b\u044f \u043c\u043e\u0435\u0439 \u0441\u0442\u0443\u0434\u0435\u043d\u0447\u0435\u0441\u043a\u043e\u0439\u003cbr\u003e\u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0438\u003c/b\u003e, \u044f \u0441\u0440\u0430\u0437\u0443 \u043a \u043d\u0435\u0439 \u043f\u0440\u0438\u0435\u0434\u0443: \u043f\u043e \u0441\u0435\u0431\u0435 \u0437\u043d\u0430\u044e, \u043a\u0430\u043a \u0432\u0430\u0436\u043d\u043e \u0442\u0430\u043a\u043e\u0435\u003cbr\u003e\u0431\u0435\u0437\u0440\u0430\u0441\u0441\u0443\u0434\u0441\u0442\u0432\u043e \u0434\u043b\u044f \u0422\u0430\u043d\u0438\" (\u0417. \u0411\u043e\u0440\u0442\u043d\u043e\u0432\u0441\u043a\u0430\u044f).\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1918\u003cbr\u003egrouping: 1918-1990\u003cbr\u003eidentifier: 1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5083-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": 615.4884184211592, "y": 1388.0272267653831}, {"color": "blue", "date": "1918", "id": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5061-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0412 \u041b\u0443\u0432\u0435\u043d\u0441\u043a\u043e\u043c \u0443\u043d\u0438\u0432\u0435\u0440\u0441\u0438\u0442\u0435\u0442\u0435 \u043e\u0431\u0443\u0447\u0430\u043b\u043e\u0441\u044c \u043c\u043d\u043e\u0433\u043e \u043d\u0430\u0448\u0438\u0445 \u0441\u0442\u0443\u0434\u0435\u043d\u0442\u043e\u0432 \u043d\u0430\u003cbr\u003e\u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0438\u003c/b\u003e \u043f\u043e\u043a\u043e\u0439\u043d\u043e\u0433\u043e \u043a\u0430\u0440\u0434\u0438\u043d\u0430\u043b\u0430 \u041c\u0435\u0440\u0441\u044c\u0435, \u0438\u0441\u0442\u0438\u043d\u043d\u043e\u0433\u043e \u043e\u0442\u0446\u0430 \u0438\u003cbr\u003e\u0431\u043b\u0430\u0433\u043e\u0434\u0435\u0442\u0435\u043b\u044f \u043d\u0430\u0448\u0435\u0433\u043e \u044e\u043d\u043e\u0448\u0435\u0441\u0442\u0432\u0430.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1918\u003cbr\u003egrouping: 1918-1990\u003cbr\u003eidentifier: 1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5061-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": -360.6193753857572, "y": -706.3059696130975}, {"color": "blue", "date": "1918", "id": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5097-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u041e \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0438\u003c/b\u003e \u0442\u0435\u043f\u0435\u0440\u044c \u043d\u0435\u0447\u0435\u0433\u043e \u0438 \u0433\u043e\u0432\u043e\u0440\u0438\u0442\u044c, \u0445\u043e\u0442\u044f \u0438\u0437\u0432\u0435\u0441\u0442\u043d\u0430\u044f\u003cbr\u003e\u0441\u0443\u043c\u043c\u0430 \u0443\u0436\u0435 \u0437\u0430\u0442\u0440\u0430\u0447\u0435\u043d\u0430.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1918\u003cbr\u003egrouping: 1918-1990\u003cbr\u003eidentifier: 1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5097-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": -1653.1485262081308, "y": -743.959077979185}, {"color": "blue", "date": "1918", "id": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5095-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u041f\u0440\u0435\u043f\u043e\u0434\u0430\u0432\u0430\u043d\u0438\u0435 \u0431\u044b\u043b\u043e \u0434\u043b\u044f \u043c\u0435\u043d\u044f \u043e\u0447\u0435\u043d\u044c \u0441\u0443\u0449\u0435\u0441\u0442\u0432\u0435\u043d\u043d\u043e \u043a\u0430\u043a \u0438\u0441\u0442\u043e\u0447\u043d\u0438\u043a\u003cbr\u003e\u0434\u043e\u043f\u043e\u043b\u043d\u0438\u0442\u0435\u043b\u044c\u043d\u043e\u0433\u043e \u0434\u043e\u0445\u043e\u0434\u0430 \u0432 \u0441\u0435\u043c\u0435\u0439\u043d\u044b\u0439 \u0431\u044e\u0434\u0436\u0435\u0442 -- \u0432 \u043f\u0440\u0438\u0431\u0430\u0432\u043a\u0443 \u043a \u043d\u0435\u0431\u043e\u043b\u044c\u0448\u043e\u0439\u003cbr\u003e\u0442\u043e\u0433\u0434\u0430 \u0430\u0441\u043f\u0438\u0440\u0430\u043d\u0442\u0441\u043a\u043e\u0439 \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0438\u003c/b\u003e.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1918\u003cbr\u003egrouping: 1918-1990\u003cbr\u003eidentifier: 1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5095-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": -339.1119301176841, "y": 456.7580262754143}, {"color": "blue", "date": "1918", "id": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5093-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0412 \u0421\u043e\u0432\u0435\u0442\u0441\u043a\u0438\u0439 \u0421\u043e\u044e\u0437 \u043f\u0440\u0438\u0435\u0445\u0430\u043b\u0430 \u0434\u0435\u043b\u0435\u0433\u0430\u0446\u0438\u044f \u043a\u0430\u043a\u043e\u0433\u043e-\u0442\u043e \u0441\u043e\u044e\u0437\u0430 \u0430\u043d\u0433\u043b\u0438\u0439\u0441\u043a\u0438\u0445\u003cbr\u003e\u0441\u0442\u0443\u0434\u0435\u043d\u0442\u043e\u0432; \u043c\u043e\u0436\u0435\u0442 \u0431\u044b\u0442\u044c, \u043e\u043d\u0438 \u0445\u043e\u0440\u043e\u0448\u043e \u0440\u0430\u0441\u043f\u0440\u0435\u0434\u0435\u043b\u044f\u043b\u0438 \u043c\u0435\u0436\u0434\u0443 \u0442\u043e\u0432\u0430\u0440\u0438\u0449\u0430\u043c\u0438\u003cbr\u003e\u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044e\u003c/b\u003e \u0438 \u0440\u0430\u0437\u0431\u0438\u0440\u0430\u043b\u0438\u0441\u044c \u0432 \u0445\u043e\u043a\u043a\u0435\u0435 \u0438\u043b\u0438 \u0444\u0443\u0442\u0431\u043e\u043b\u0435, \u043d\u043e \u043e\u0431\u0449\u0438\u0439\u003cbr\u003e\u043a\u0443\u043b\u044c\u0442\u0443\u0440\u043d\u044b\u0439 \u0443\u0440\u043e\u0432\u0435\u043d\u044c \u0438\u0445 \u0431\u044b\u043b \u043d\u0435\u0432\u044b\u0441\u043e\u043a.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1918\u003cbr\u003egrouping: 1918-1990\u003cbr\u003eidentifier: 1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5093-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": 889.6805904816227, "y": -807.2264099598596}, {"color": "blue", "date": "1918", "id": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5091-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0418 \u0443\u0436\u0435 \u0441\u0435\u0433\u043e\u0434\u043d\u044f \u043d\u0430\u0434\u043e \u043e\u0442\u0431\u0438\u0440\u0430\u0442\u044c \u0442\u0430\u043a\u0438\u0445 \u043b\u044e\u0434\u0435\u0439 \u0438 \u0434\u0430\u0432\u0430\u0442\u044c \u0438\u043c \u0441\u0432\u043e\u0431\u043e\u0434\u0443\u003cbr\u003e\u0448\u0430\u0442\u0430\u0442\u044c\u0441\u044f \u0441 \u0444\u0430\u043a\u0443\u043b\u044c\u0442\u0435\u0442\u0430 \u043d\u0430 \u0444\u0430\u043a\u0443\u043b\u044c\u0442\u0435\u0442, \u043f\u0440\u043e\u0434\u043b\u0438\u0432 \u0438\u043c \u0441\u0442\u0443\u0434\u0435\u043d\u0447\u0435\u0441\u043a\u0443\u044e\u003cbr\u003e\u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044e\u003c/b\u003e \u0434\u043e \u0441\u0430\u043c\u043e\u0439 \u0441\u043c\u0435\u0440\u0442\u0438.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1918\u003cbr\u003egrouping: 1918-1990\u003cbr\u003eidentifier: 1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5091-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": 1267.0471058052383, "y": -625.6424223676804}, {"color": "blue", "date": "1918", "id": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5049-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0423 \u043c\u0435\u043d\u044f \u0432 \u043b\u0435\u0441\u043e\u0442\u0435\u0445\u043d\u0438\u0447\u0435\u0441\u043a\u043e\u043c \u0438\u043d\u0441\u0442\u0438\u0442\u0443\u0442\u0435 \u0441\u043e\u0445\u0440\u0430\u043d\u0438\u043b\u0441\u044f \u0442\u043e\u043b\u044c\u043a\u043e \u043f\u0440\u0438\u043a\u0430\u0437 \u043e\u0442\u003cbr\u003e\u0430\u0432\u0433\u0443\u0441\u0442\u0430 1949 \u0433\u043e\u0434\u0430 \u043e \u043d\u0430\u0447\u0438\u0441\u043b\u0435\u043d\u0438\u0438 \u043c\u043d\u0435 \u043f\u043e\u0432\u044b\u0448\u0435\u043d\u043d\u043e\u0439 \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0438\u003c/b\u003e (\u044f \u0441\u0434\u0430\u043b\u003cbr\u003e\u0432\u0441\u0435 \u043d\u0430 \"\u043e\u0442\u043b\u0438\u0447\u043d\u043e\").\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1918\u003cbr\u003egrouping: 1918-1990\u003cbr\u003eidentifier: 1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5049-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": 243.96806030403673, "y": -1236.9898251564439}, {"color": "blue", "date": "1918", "id": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5063-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0421\u0442\u0443\u0434\u0435\u043d\u0442 \u043f\u0440\u0438\u0445\u043e\u0434\u0438\u0442 \u0432 \u0441\u0442\u043e\u043b\u043e\u0432\u0443\u044e, \u043f\u0440\u0430\u0432\u043e\u0439 \u0440\u0443\u043a\u043e\u0439 \u0437\u0430\u043a\u0440\u044b\u0432\u0430\u0435\u0442 \u0446\u0435\u043d\u044b, \u043b\u0435\u0432\u043e\u0439\u003cbr\u003e\u0432\u044b\u0431\u0438\u0440\u0430\u0435\u0442 \u043d\u0430\u0437\u0432\u0430\u043d\u0438\u044f \u0431\u043b\u044e\u0434, \u043f\u043e\u043a\u0443\u043f\u0430\u0435\u0442, \u0435\u0441\u0442. 2) \u041d\u0435\u0434\u0435\u043b\u044f \u043f\u043e\u0441\u043b\u0435\u003cbr\u003e\u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0438\u003c/b\u003e: \u0434\u0435\u0439\u0441\u0442\u0432\u0443\u0435\u0442 \u043f\u0440\u0430\u0432\u0438\u043b\u043e \u043b\u0435\u0432\u043e\u0439 \u0440\u0443\u043a\u0438.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1918\u003cbr\u003egrouping: 1918-1990\u003cbr\u003eidentifier: 1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5063-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": 1399.5508013183057, "y": 1618.229468624372}, {"color": "blue", "date": "1918", "id": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5087-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0418 \u043f\u043e\u043b\u0443\u0447\u0430\u0435\u0442 \u043e\u043d, \u043a\u0441\u0442\u0430\u0442\u0438, \u043d\u0435 \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044e\u003c/b\u003e, \u0438\u043d\u044b\u043c\u0438 \u0441\u043b\u043e\u0432\u0430\u043c\u0438,\u003cbr\u003e\u0434\u043e\u043f\u043b\u0430\u0442\u0443 \u043e\u0442 \u0433\u043e\u0441\u0443\u0434\u0430\u0440\u0441\u0442\u0432\u0430, \u0430 \u043d\u0430\u0441\u0442\u043e\u044f\u0449\u0443\u044e \u0442\u0440\u0443\u0434\u043e\u0432\u0443\u044e \u0437\u0430\u0440\u043f\u043b\u0430\u0442\u0443, \u0447\u0430\u0441\u0442\u044c \u043a\u043e\u0442\u043e\u0440\u043e\u0439\u003cbr\u003e\u0438\u0434\u0435\u0442 \u043d\u0430 \u043f\u043e\u043a\u0440\u044b\u0442\u0438\u0435 \u0440\u0430\u0441\u0445\u043e\u0434\u043e\u0432 \u043d\u0430 \u0435\u0433\u043e \u043e\u0431\u0443\u0447\u0435\u043d\u0438\u0435.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1918\u003cbr\u003egrouping: 1918-1990\u003cbr\u003eidentifier: 1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5087-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": -2000.0, "y": 671.2397894299775}, {"color": "blue", "date": "1918", "id": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5047-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0412 1937 \u0433\u043e\u0434\u0443 \"\u0410\u043d\u0435\u043d\u0435\u0440\u0431\u0435\" -- \u0438\u043d\u0441\u0442\u0438\u0442\u0443\u0442 \u043f\u043e \u0438\u0437\u0443\u0447\u0435\u043d\u0438\u044e \u0440\u043e\u0434\u043e\u0432\u043e\u0433\u043e\u003cbr\u003e\u043d\u0430\u0441\u043b\u0435\u0434\u0438\u044f, \u043a\u043e\u0442\u043e\u0440\u044b\u0439 \u043f\u0430\u0442\u0440\u043e\u043d\u0438\u0440\u043e\u0432\u0430\u043b \u0441\u0430\u043c \u0440\u0435\u0439\u0445\u0441\u0444\u044e\u0440\u0435\u0440 \u0421\u0421 \u0413\u0438\u043c\u043c\u043b\u0435\u0440, \u043f\u0440\u0435\u0434\u043e\u0441\u0442\u0430\u0432\u0438\u043b\u003cbr\u003e\u043f\u0440\u043e\u0444\u0435\u0441\u0441\u043e\u0440\u0443 \u0420\u0430\u043d\u0443 \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044e\u003c/b\u003e \u0434\u043b\u044f \u043e\u0440\u0433\u0430\u043d\u0438\u0437\u0430\u0446\u0438\u0438 \u0430\u0440\u0445\u0435\u043e\u043b\u043e\u0433\u0438\u0447\u0435\u0441\u043a\u0438\u0445\u003cbr\u003e\u0440\u0430\u0441\u043a\u043e\u043f\u043e\u043a \u043d\u0430 \u041c\u043e\u043d\u0441\u0435\u0433\u044e\u0440\u0441\u043a\u043e\u043c \u0445\u043e\u043b\u043c\u0435.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1918\u003cbr\u003egrouping: 1918-1990\u003cbr\u003eidentifier: 1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5047-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": -417.52832684585746, "y": -326.49925037136285}, {"color": "blue", "date": "1918", "id": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5065-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0420\u0430\u0437\u043c\u0435\u0440 \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0438\u003c/b\u003e \u0443\u0432\u0435\u043b\u0438\u0447\u0435\u043d \u0432\u0434\u0432\u043e\u0435 \u043f\u0440\u043e\u0442\u0438\u0432 \u043f\u0440\u043e\u0448\u043b\u043e\u0433\u043e \u0433\u043e\u0434\u0430 \u0438\u003cbr\u003e\u0434\u043e\u0432\u0435\u0434\u0435\u043d \u0432 \u0441\u0442\u043e\u043b\u0438\u0446\u0430\u0445 \u0438 \u043f\u0440\u043e\u043c\u044b\u0448\u043b\u0435\u043d\u043d\u044b\u0445 \u0446\u0435\u043d\u0442\u0440\u0430\u0445 \u0434\u043e 20 \u0440\u0443\u0431\u043b\u0435\u0439 \u043d\u0430 \u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0430\u0442\u0430,\u003cbr\u003e\u0432 \u043f\u0440\u043e\u0432\u0438\u043d\u0446\u0438\u0438 -- \u0434\u043e 15 \u0440\u0443\u0431\u043b\u0435\u0439.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1918\u003cbr\u003egrouping: 1918-1990\u003cbr\u003eidentifier: 1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5065-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": -1210.613139785893, "y": 1145.5502849854463}, {"color": "blue", "date": "1918", "id": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5051-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u041d\u043e \u043d\u0430\u0441\u0447\u0435\u0442 \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0438\u003c/b\u003e \u043d\u0438\u0447\u0435\u0433\u043e \u043e\u0431\u0435\u0449\u0430\u0442\u044c \u043d\u0435 \u043c\u043e\u0433\u0443.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1918\u003cbr\u003egrouping: 1918-1990\u003cbr\u003eidentifier: 1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5051-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": 771.7281156904245, "y": 678.4571228363436}, {"color": "blue", "date": "1918", "id": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5105-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u043a\u0440\u0435\u0441\u0442\u044c\u044f\u043d, \u0447\u0435\u043c\u0443 \u0441\u043f\u043e\u0441\u043e\u0431\u0441\u0442\u0432\u043e\u0432\u0430\u043b\u043e \u0441\u043e\u0437\u0434\u0430\u043d\u0438\u0435 \u043f\u0440\u0438 \u0441\u0440\u0435\u0434\u043d\u0438\u0445 \u0448\u043a\u043e\u043b\u0430\u0445\u003cbr\u003e\u0438\u043d\u0442\u0435\u0440\u043d\u0430\u0442\u043e\u0432, \u0432\u044b\u0434\u0430\u0447\u0430 \u0443\u0447\u0430\u0449\u0438\u043c\u0441\u044f \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0439\u003c/b\u003e \u0438 \u043e\u0440\u0433\u0430\u043d\u0438\u0437\u0430\u0446\u0438\u044f \u043e\u0441\u043e\u0431\u044b\u0445\u003cbr\u003e\u043e\u0442\u0434\u0435\u043b\u0435\u043d\u0438\u0439 \u0434\u043b\u044f \u0443\u0447\u0430\u0449\u0438\u0445\u0441\u044f \u0438\u0437 \u0441\u0440\u0435\u0434\u044b \u0442\u0440\u0443\u0434\u044f\u0449\u0438\u0445\u0441\u044f.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1918\u003cbr\u003egrouping: 1918-1990\u003cbr\u003eidentifier: 1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5105-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": 677.8556289061612, "y": 52.16170758293315}, {"color": "blue", "date": "1918", "id": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5101-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0414\u043b\u044f \u0420\u043e\u043a\u0444\u0435\u043b\u043b\u0435\u0440\u043e\u0432\u0441\u043a\u043e\u0439 \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0438\u003c/b\u003e \u044f \u0441\u0447\u0438\u0442\u0430\u044e \u0441\u0435\u0431\u044f \u0443\u0436\u0435\u003cbr\u003e\u043d\u0435\u0434\u043e\u0441\u0442\u0430\u0442\u043e\u0447\u043d\u043e \u043c\u043e\u043b\u043e\u0434\u044b\u043c, \u0447\u0442\u043e\u0431\u044b \u0435\u0437\u0434\u0438\u0442\u044c \u043d\u0430 \u043f\u043e\u043a\u043b\u043e\u043d \u043a \u0422\u0440\u043e\u0443\u0431\u0440\u0438\u0434\u0436\u04438.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1918\u003cbr\u003egrouping: 1918-1990\u003cbr\u003eidentifier: 1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5101-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": -39.91357062249425, "y": 220.7920323345572}, {"color": "blue", "date": "1918", "id": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5053-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u0421\u0442\u0435\u043d\u0434 \u0443 \u0432\u0445\u043e\u0434\u0430 \u0437\u0430\u0432\u043b\u0435\u043a\u0430\u043b \u043f\u043e\u0432\u044b\u0448\u0435\u043d\u043d\u043e\u0439 \u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u0435\u0439\u003c/b\u003e \u0438\u003cbr\u003e\u043e\u0431\u0449\u0435\u0436\u0438\u0442\u0438\u0435\u043c \u0434\u043b\u044f \u0432\u0441\u0435\u0445 \u043d\u0443\u0436\u0434\u0430\u044e\u0449\u0438\u0445\u0441\u044f.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1918\u003cbr\u003egrouping: 1918-1990\u003cbr\u003eidentifier: 1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5053-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": 437.5604277116782, "y": -865.7022673885875}, {"color": "blue", "date": "1918", "id": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5089-14", "label": "0", "physics": false, "shape": "circle", "size": 10, "title": "\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u041a\u0430\u043a \u0443\u0441\u043f\u0435\u0432\u0430\u044e\u0449\u0438\u0439 \u043f\u043e\u043b\u0443\u0447\u0430\u0435\u0442 \u0433\u043e\u0441\u0443\u0434\u0430\u0440\u0441\u0442\u0432\u0435\u043d\u043d\u0443\u044e\u003cbr\u003e\u003cb\u003e\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044e\u003c/b\u003e.\u003cspan style=\"color:#808080;\"\u003e\u003c/span\u003e\u003cp style=\"font-size:8px;\"\u003e\u003cbr\u003edate: 1918\u003cbr\u003egrouping: 1918-1990\u003cbr\u003eidentifier: 1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5089-14\u003cbr\u003etype: usage\u003cbr\u003epos: NOUN\u003c/p\u003e", "x": 159.2013094995059, "y": 1408.658654027333}]);
+        edges = new vis.DataSet([{"color": "black", "from": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5054-14", "label": 4, "to": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5055-14", "weight": 4.0, "width": 4}, {"color": "black", "from": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5066-14", "label": 4, "to": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5067-14", "weight": 4.0, "width": 4}, {"color": "black", "from": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5088-14", "label": 4, "to": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5089-14", "weight": 4.0, "width": 4}, {"color": "black", "from": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5074-14", "label": 4, "to": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5075-14", "weight": 4.0, "width": 4}, {"color": "black", "from": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5090-14", "label": 4, "to": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5091-14", "weight": 4.0, "width": 4}, {"color": "black", "from": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5092-14", "label": 4, "to": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5093-14", "weight": 4.0, "width": 4}, {"color": "black", "from": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5094-14", "label": 4, "to": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5095-14", "weight": 4.0, "width": 4}, {"color": "black", "from": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5096-14", "label": 4, "to": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5097-14", "weight": 4.0, "width": 4}, {"color": "black", "from": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5064-14", "label": 4, "to": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5065-14", "weight": 4.0, "width": 4}, {"color": "black", "from": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5098-14", "label": 4, "to": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5099-14", "weight": 4.0, "width": 4}, {"color": "black", "from": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5082-14", "label": 4, "to": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5083-14", "weight": 4.0, "width": 4}, {"color": "black", "from": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5068-14", "label": 4, "to": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5069-14", "weight": 4.0, "width": 4}, {"color": "black", "from": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5070-14", "label": 4, "to": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5071-14", "weight": 4.0, "width": 4}, {"color": "black", "from": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5072-14", "label": 4, "to": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5073-14", "weight": 4.0, "width": 4}, {"color": "black", "from": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5076-14", "label": 4, "to": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5077-14", "weight": 4.0, "width": 4}, {"color": "black", "from": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5078-14", "label": 4, "to": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5079-14", "weight": 4.0, "width": 4}, {"color": "black", "from": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5080-14", "label": 4, "to": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5081-14", "weight": 4.0, "width": 4}, {"color": "black", "from": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5100-14", "label": 4, "to": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5101-14", "weight": 4.0, "width": 4}, {"color": "black", "from": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5104-14", "label": 4, "to": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5105-14", "weight": 4.0, "width": 4}, {"color": "black", "from": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5084-14", "label": 4, "to": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5085-14", "weight": 4.0, "width": 4}, {"color": "black", "from": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5086-14", "label": 4, "to": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5087-14", "weight": 4.0, "width": 4}, {"color": "black", "from": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5060-14", "label": 4, "to": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5061-14", "weight": 4.0, "width": 4}, {"color": "black", "from": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5102-14", "label": 4, "to": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5103-14", "weight": 4.0, "width": 4}, {"color": "black", "from": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5056-14", "label": 4, "to": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5057-14", "weight": 4.0, "width": 4}, {"color": "black", "from": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5046-14", "label": 4, "to": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5047-14", "weight": 4.0, "width": 4}, {"color": "black", "from": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5062-14", "label": 3, "to": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5063-14", "weight": 3.0, "width": 4}, {"color": "black", "from": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5058-14", "label": 4, "to": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5059-14", "weight": 4.0, "width": 4}, {"color": "black", "from": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5052-14", "label": 4, "to": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5053-14", "weight": 4.0, "width": 4}, {"color": "black", "from": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5050-14", "label": 4, "to": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5051-14", "weight": 4.0, "width": 4}, {"color": "black", "from": "1700-1916_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5048-14", "label": 4, "to": "1918-1990_\u0441\u0442\u0438\u043f\u0435\u043d\u0434\u0438\u044f_5049-14", "weight": 4.0, "width": 4}]);
+
+        // adding nodes and edges to the graph
+        data = { nodes: nodes, edges: edges };
+
+        var options = {
+    "configure": {
+        "enabled": true,
+        "filter": [
+            "nodes",
+            "edges"
+        ]
+    },
+    "edges": {
+        "color": {
+            "inherit": false
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": false,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+        
+
+        
+        // if this network requires displaying the configure window,
+        // put it in its div
+        options.configure["container"] = document.getElementById("config");
+        
+
+        network = new vis.Network(container, data, options);
+
+        
+
+
+        
+
+        return network;
+
+    }
+
+        drawGraph();
+
+
+        let nodesInTimePeriod = new Set();
+        let edgesInTimePeriod = new Set();
+        let edgesBelowWeight = new Set();
+        let nodesInGrouping = new Set();
+        let edgesInGrouping = new Set();
+        let edgesToBeShown = new Set();
+        let nodesToBeShown = new Set();
+
+        edges.forEach(function (edge) {
+            edgesBelowWeight.add(edge.id);
+            edgesInGrouping.add(edge.id);
+            edgesInTimePeriod.add(edge.id);
+            edgesToBeShown.add(edge.id);
+        })
+
+        nodes.forEach(function (node) {
+            nodesInTimePeriod.add(node.id);
+            nodesInGrouping.add(node.id);
+            nodesToBeShown.add(node.id);
+        })
+
+
+        function showEdges() {
+            edgesToBeShown.forEach(function (edge) {
+                edge.hidden = false;
+                edges.update(edge);
+            })
+        }
+
+        //Missing the loading icon
+        //slider code from pyvis filter example
+        // Handler event when slider changes
+
+        let slider = document.getElementById('slider');
+        let sliderMin = document.getElementById('slider-min');
+        let sliderDisplay = document.getElementById('sliderValueDisplay');
+        let sliderMinDisplay = document.getElementById('sliderValueDisplayMin');
+
+        sliderDisplay.innerHTML = "4";
+        sliderMinDisplay.innerHTML = "1";
+
+        function weightFilter() {
+            console.log("weight filter got called");
+            // Get the value of the slider
+            let sliderValue = slider.value;
+            let sliderMinValue = sliderMin.value;
+
+            // Display the selected value next to slider
+            sliderDisplay.innerHTML = sliderValue;
+            sliderMinDisplay.innerHTML = sliderMinValue;
+
+            // Loop through the edges
+            edges.forEach(function (edge) {
+                // Check if the edge should be displayed based on its weight
+                if (edge.weight <= sliderValue && edge.weight >= sliderMinValue) {
+                    if (!nodes.get(edge.to).hidden && !nodes.get(edge.from).hidden) {
+                        edgesBelowWeight.add(edge.id);
+                        edge.hidden = false;
+                        edges.update(edge);
+                    }
+                    // Edge should be displayed
+                    // Unhide edge if it's hidden and update DataSet
+
+                } else if (isNaN(edge.weight)) {
+                    //console.log("its NaN")
+                } else {
+
+                    // Edge should not be displayed
+                    // Hide edge if not already hidden and update DataSet
+                    if (!edge.hidden) {
+                        edgesBelowWeight.delete(edge.id);
+                        edge.hidden = true;
+                        edges.update(edge);
+                    }
+                }
+            });
+
+
+            calcMean();
+        }
+
+
+
+        //code for node date filter
+        let dates = [];
+        nodes.forEach(function (node) {
+            date = node.date;
+            if (!dates.includes(date)) {
+                dates.push(date);
+            }
+        });
+        dates.sort();
+
+
+        //code for date slider
+        let minDate = 10000;
+        let maxDate = 0;
+
+        let minPicker = document.getElementById('minPicker');
+        let maxPicker = document.getElementById('maxPicker');
+
+        if (!minPicker.hasChildNodes()) {
+            dates.forEach(function (date) {
+                if (Number(date) < minDate) {
+                    minDate = Number(date);
+                }
+                if (Number(date) > maxDate) {
+                    maxDate = Number(date);
+                }
+
+
+                let option = document.createElement('option');
+                option.text = date;
+                option.value = date;
+
+                let option2 = document.createElement('option');
+                option2.text = date;
+                option2.value = date;
+
+                minPicker.append(option);
+                maxPicker.append(option2);
+
+            })
+        } else {
+            minDate = Number(dates[0]);
+            maxDate = Number(dates[dates.length-1]);
+        }
+        maxPicker.selectedIndex = dates.length - 1;
+
+
+
+        function showSelectLoad() {
+            return new Promise(function (resolve) {
+                loadingIcon.style.visibility = 'visible';
+                resolve();
+            });
+        }
+
+        function hideSelectLoad() {
+            return new Promise(function (resolve) {
+                loadingIcon.style.visibility = 'hidden';
+                resolve();
+            });
+        }
+
+
+
+        const loadingIcon = document.querySelector('.loading-icon');
+        const select = document.querySelector('.select-load');
+
+        select.addEventListener('change', function () {
+            showSelectLoad();
+            setTimeout(selectGroup, 1000);
+
+
+            setTimeout(hideSelectLoad, 1000);
+
+
+        });
+
+        //const slider_load = document.querySelector('.slider-load');
+
+         slider.addEventListener('change', function() {
+            showSelectLoad();
+            setTimeout(weightFilter,1000);
+
+
+            setTimeout(hideSelectLoad, 1000);
+
+
+        });
+
+         sliderMin.addEventListener('change', function() {
+            showSelectLoad();
+            setTimeout(weightFilter,1000);
+
+
+            setTimeout(hideSelectLoad, 1000);
+
+
+        });
+
+        let groupPicker = document.getElementById('groupPicker');
+        groupPicker.selectedIndex = 0;
+        let minValue = minPicker.value;
+        let maxValue = maxPicker.value;
+
+        function selectGroup() {
+            return new Promise(function (resolve, reject) {
+                let selectValue = document.getElementById('groupPicker').value;
+
+                console.log("grouping value: " + selectValue);
+
+                if (selectValue == 1) {
+                    nodes.forEach(function (node) {
+
+
+                        if (node.title.includes("grouping: 1") && Number(node.date) >= Number(minValue) && Number(node.date) <= Number(maxValue) && (Number(node.label) !== -1 || (Number(node.label) == -1 && showNoiseLabels))) {
+                            node.hidden = false;
+                            nodes.update(node);
+                        } else {
+                            node.hidden = true;
+                            nodes.update(node);
+                        }
+                    })
+                } else if (selectValue == 2) {
+                    nodes.forEach(function (node) {
+                        if (node.title.includes("grouping: 2") && Number(node.date) >= Number(minValue) && Number(node.date) <= Number(maxValue) && (Number(node.label) !== -1 || (Number(node.label) == -1 && showNoiseLabels))) {
+                            node.hidden = false;
+                            nodes.update(node);
+                        } else {
+                            node.hidden = true;
+                            nodes.update(node);
+                        }
+                    })
+                } else {
+                    nodes.forEach(function (node) {
+                        if (Number(node.date) >= Number(minValue) && Number(node.date) <= Number(maxValue) && (Number(node.label) !== -1 || (Number(node.label) == -1 && showNoiseLabels))) {
+                            node.hidden = false;
+                            nodes.update(node);
+                        } else {
+                            node.hidden = true;
+                            nodes.update(node);
+                        }
+                    })
+                }
+                loadingIcon.style.visibility = 'hidden';
+
+                edges.forEach(function (edge) {
+                    if (isNaN(edge.weight)) {
+                        if (showNaNEdges && !nodes.get(edge.to).hidden && !nodes.get(edge.from).hidden) {
+
+                            edge.hidden = false;
+                            edges.update(edge);
+                        } else {
+                            edge.hidden = true;
+                            edge.hidden = true;
+                            edges.update(edge);
+                        }
+                    } else if (!nodes.get(edge.to).hidden && !nodes.get(edge.from).hidden && !isNaN(edge.weight)) {
+                        edgesInGrouping.add(edge.id);
+                        edge.hidden = false;
+                        edges.update(edge);
+                    } else {
+                        edgesInGrouping.delete(edge.id);
+                        edge.hidden = true;
+                        edges.update(edge);
+                    }
+
+
+                })
+                loadingIcon.style.visibility = 'hidden';
+                calcMean();
+                updateClusterDistribution();
+                resolve();
+            });
+
+        }
+
+        function dateFilter() {
+            showSelectLoad();
+            setTimeout(pickDates, 1000);
+
+
+            setTimeout(hideSelectLoad, 2000);
+
+
+        }
+
+        function pickDates() {
+            loadingIcon.style.visibility = 'visible';
+
+            let selectValue = document.getElementById('groupPicker').value;
+            minValue = minPicker.value;
+            maxValue = maxPicker.value;
+
+            //console.log("showing dates between " + minValue + " and " + maxValue);
+
+            if (selectValue == 1) {
+                nodes.forEach(function (node) {
+
+
+                    if (node.title.includes("grouping: 1") && Number(node.date) >= Number(minValue) && Number(node.date) <= Number(maxValue) && (Number(node.label) !== -1 || (Number(node.label) == -1 && showNoiseLabels))) {
+                        node.hidden = false;
+                        nodes.update(node);
+                    } else {
+                        node.hidden = true;
+                        nodes.update(node);
+                    }
+                })
+            } else if (selectValue == 2) {
+                nodes.forEach(function (node) {
+                    if (node.title.includes("grouping: 2") && Number(node.date) >= Number(minValue) && Number(node.date) <= Number(maxValue) && (Number(node.label) !== -1 || (Number(node.label) == -1 && showNoiseLabels))) {
+                        node.hidden = false;
+                        nodes.update(node);
+                    } else {
+                        node.hidden = true;
+                        nodes.update(node);
+                    }
+                })
+            } else {
+                nodes.forEach(function (node) {
+                    if (Number(node.date) >= Number(minValue) && Number(node.date) <= Number(maxValue) && (Number(node.label) !== -1 || (Number(node.label) == -1 && showNoiseLabels))) {
+                        node.hidden = false;
+                        nodes.update(node);
+                    } else {
+                        node.hidden = true;
+                        nodes.update(node);
+                    }
+                })
+            }
+
+            edges.forEach(function (edge) {
+
+
+                if (isNaN(edge.weight) && !showNaNEdges) {
+
+                } else if (!nodes.get(edge.to).hidden && !nodes.get(edge.from).hidden && isNaN(edge.weight)){
+                    edgesInTimePeriod.add(edge.id);
+                    edge.hidden = false;
+                    edges.update(edge);
+                } else if (!nodes.get(edge.to).hidden && !nodes.get(edge.from).hidden && edge.weight >= sliderMin.value && edge.weight <= slider.value) {
+                    edgesInTimePeriod.add(edge.id);
+                    edge.hidden = false;
+                    edges.update(edge);
+                } else {
+                    edgesInTimePeriod.delete(edge.id);
+                    edge.hidden = true;
+                    edges.update(edge);
+                }
+
+
+            })
+            loadingIcon.style.visibility = 'hidden'
+
+
+            calcMean();
+            updateClusterDistribution();
+
+        }
+
+        let showNaNEdges = true;
+
+        function filterNaN() {
+            showSelectLoad();
+            setTimeout(selectNaN, 1000);
+
+
+            setTimeout(hideSelectLoad, 1000);
+
+        };
+
+        const checkboxNaN = document.getElementById("checkboxNaN");
+
+        function selectNaN() {
+            if (checkboxNaN.checked) {
+
+                showNaNEdges = true;
+                edges.forEach(function (edge) {
+                    if (isNaN(edge.weight)) {
+                        edge.hidden = false;
+                        edges.update(edge);
+                        pickDates();
+                    }
+                });
+            } else {
+                showNaNEdges = false;
+                edges.forEach(function (edge) {
+                    if (isNaN(edge.weight)) {
+                        edge.hidden = true;
+                        edges.update(edge);
+                    }
+                });
+            }
+
+
+        }
+
+
+        const checkboxNoiseLabels = document.getElementById("checkboxNoiseLabels");
+
+        document.getElementById("checkboxNaN").checked = true;
+        document.getElementById("checkboxNoiseLabels").checked = true;
+
+        let showNoiseLabels = true;
+
+        function filterNoiseLabels() {
+            showSelectLoad();
+            setTimeout(selectNoiseLabels, 1000);
+
+
+            setTimeout(hideSelectLoad, 1000);
+        }
+
+        function selectNoiseLabels() {
+            if (checkboxNoiseLabels.checked) {
+
+                showNoiseLabels = true;
+
+                nodes.forEach(function (node) {
+                    if (Number(node.label) == -1) {
+                        node.hidden = false;
+                        nodes.update(node);
+                    }
+                })
+
+                edges.forEach(function (edge) {
+                    if (!nodes.get(edge.to).hidden && !nodes.get(edge.from).hidden) {
+                        if (isNaN(edge.weight) && !showNaNEdges) {
+                            edge.hidden = true;
+                            edges.update(edge);
+
+                        } else {
+                            edge.hidden = false;
+                            edges.update(edge);
+                        }
+                    }
+                })
+
+            } else {
+
+                showNoiseLabels = false;
+
+                nodes.forEach(function (node) {
+                    if (Number(node.label) == -1) {
+
+                        node.hidden = true;
+
+                        nodes.update(node);
+                    }
+                })
+
+                edges.forEach(function (edge) {
+                    if (nodes.get(edge.to).hidden || nodes.get(edge.from).hidden || (isNaN(edge.weight) && !showNaNEdges)) {
+
+                        edge.hidden = true;
+                        edges.update(edge);
+
+                    }
+                })
+
+            }
+            updateClusterDistribution();
+        }
+
+
+        let fillMean = document.getElementById("fillMean");
+        let fillSD = document.getElementById("fillSD");
+
+
+        function calcMean() {
+            let edgeValues = [];
+            edges.forEach(function (edge) {
+                if (!edge.hidden) {
+                    let label = parseFloat(edge.weight);
+                    if (!isNaN(label)) {
+                        edgeValues.push(label);
+                    }
+                }
+            })
+
+            let mean = edgeValues.reduce((a, b) => a + b, 0) / edgeValues.length;
+            let sd = dev(edgeValues, mean);
+            if (isNaN(mean)) {
+                mean = 0;
+            }
+            if (isNaN(sd)) {
+                sd = 0;
+            }
+            mean = mean.toFixed(5);
+            sd = sd.toFixed(5);
+
+            fillMean.innerHTML = "Edge weight mean: ";
+            fillSD.innerHTML = "Edge weight standard deviation: "
+
+            fillMean.append(mean);
+            fillSD.append(sd);
+
+        }
+
+
+        // Javascript program to calculate the standard deviation of an array
+
+        function dev(arr, mean) {
+
+            // Assigning (value - mean) ^ 2 to every array item
+            arr = arr.map((k) => {
+                return (k - mean) ** 2
+            })
+
+
+            // Calculating the sum of updated array
+            let sum = arr.reduce((acc, curr) => acc + curr, 0);
+
+
+            // Returning the standard deviation
+            return Math.sqrt(sum / arr.length)
+        }
+
+        calcMean();
+
+
+        let heading = document.getElementById("heading").innerHTML;
+        let onlyLemma = heading.replace(/ .*/, '');
+
+        //NEW
+
+        // set up flag variables to track which scripts have been loaded successfully
+        let statsLoaded = false;
+        let statsGroupingsLoaded = false;
+        let statsAgreementLoaded = false;
+        let statsPlottingLoaded = false;
+        let statsDataJointLoaded = false;
+
+        let filteredStats = [];
+        let filteredStatsGroupings = [];
+        let filteredStatsAgreement = [];
+        let filteredStatsPlotting = [];
+        let filteredStatsDataJoint = [];
+
+        let clusteringMethod;
+        let cluster_freq_dist;
+        let cluster_prob_dist;
+        let noise_cluster_count;
+        let clusterInfo;
+        let statisticsDiv;
+        let nodePosition;
+
+
+        // create event listeners for each script to set the corresponding flag when loaded
+        document.addEventListener('statsLoaded', function () {
+            console.log('stats.js is fully loaded!');
+            statsLoaded = true;
+            checkAllScriptsLoaded();
+        });
+
+        document.addEventListener('statsGroupingsLoaded', function () {
+            console.log('stats_groupings.js is fully loaded!');
+            statsGroupingsLoaded = true;
+            checkAllScriptsLoaded();
+        });
+
+        document.addEventListener('statsAgreementLoaded', function () {
+            console.log('stats_agreement.js is fully loaded!');
+            statsAgreementLoaded = true;
+            checkAllScriptsLoaded();
+        });
+
+        document.addEventListener('statsPlottingLoaded', function () {
+            console.log('stats_plotting.js is fully loaded!');
+            statsPlottingLoaded = true;
+            checkAllScriptsLoaded();
+        });
+
+        document.addEventListener('statsDataJointLoaded', function () {
+            console.log('data_joint.js is fully loaded!');
+            statsDataJointLoaded = true;
+            checkAllScriptsLoaded();
+        });
+
+        // load each script with the same function
+        function loadScript(scriptUrl, eventName) {
+            const script = document.createElement('script');
+            script.src = scriptUrl;
+            script.type = 'text/javascript';
+
+            script.addEventListener('load', function () {
+                console.log(scriptUrl + ' loaded successfully');
+                document.dispatchEvent(new Event(eventName));
+            });
+
+            script.addEventListener('error', function () {
+                console.log('Failed to load ' + scriptUrl);
+                checkAllScriptsLoaded();
+            });
+
+            document.body.appendChild(script);
+        }
+
+        // call the loadScript function for each script you want to load
+        loadScript('../stats.js', 'statsLoaded');
+        loadScript('../stats_groupings.js', 'statsGroupingsLoaded');
+        loadScript('../stats_agreement.js', 'statsAgreementLoaded');
+        loadScript('../stats_plotting.js', 'statsPlottingLoaded');
+        loadScript('../data_joint.js', 'statsDataJointLoaded');
+
+        // check if all scripts have been loaded, and execute the code that depends on them if they have
+        function checkAllScriptsLoaded() {
+
+            if (statsLoaded) {
+                try {
+                    filteredStats = stats.filter(row => row.lemma === onlyLemma);
+                } catch (err) {
+                    console.log('stats not found');
+                }
+
+                try {
+                    generateTable(filteredStats, "stats");
+                } catch (err) {
+                    console.log('problem generating table with stats');
+                }
+
+                try {
+                    clusteringMethod = filteredStats[0].algorithm;
+                } catch (err) {
+                    console.log('filteredStats[0] not found');
+                }
+
+
+
+            }
+
+            if (statsGroupingsLoaded) {
+                try {
+                    filteredStatsGroupings = stats_groupings.filter(row => row.lemma === onlyLemma);
+                } catch (err) {
+                    console.log('stats_groupings not found');
+                }
+
+                try {
+                    generateTable(filteredStatsGroupings, "statsGroupings");
+                } catch (err) {
+                    console.log('problem generating table with stats_groupings');
+                }
+
+                cluster_freq_dist = filteredStatsGroupings[0].cluster_freq_dist;
+                cluster_prob_dist = filteredStatsGroupings[0].cluster_prob_dist;
+            }
+
+            if (statsAgreementLoaded) {
+                try {
+                    filteredStatsAgreement = stats_agreement.filter(row => row.data === onlyLemma);
+                } catch (err) {
+                    console.log('stats_agreement not found');
+                }
+
+                try {
+                    generateTable(filteredStatsAgreement, "statsAgreement");
+                } catch (err) {
+                    console.log('problem generating table with stats_agreement');
+                }
+
+
+            }
+
+            if (statsPlottingLoaded) {
+                try {
+                    filteredStatsPlotting = stats_plotting.filter(row => row.lemma === onlyLemma);
+                } catch (err) {
+                    console.log('stats_plotting not found');
+                }
+
+                try {
+                    generateTable(filteredStatsPlotting, "statsPlotting");
+                } catch (err) {
+                    console.log('problem generating table with stats_plotting');
+                }
+
+                nodePosition = filteredStatsPlotting[0].node_position;
+            }
+
+            if (statsDataJointLoaded) {
+                try {
+                    filteredStatsDataJoint = data_joint.filter(row => row.lemma === onlyLemma);
+                } catch (err) {
+                    console.log('stats_data_joint not found');
+                }
+
+                try {
+                    generateDetails(filteredStatsDataJoint, "statsDataJoint");
+                } catch (err) {
+                    console.log('problem generating table with statsDataJoint');
+                }
+
+                if(!annotatorsContainer.hasChildNodes()){
+                    fillAnnotatorsContainer(filteredStatsDataJoint);
+                }
+            }
+
+            noise_cluster_count = 0;
+            nodes.forEach(function (node) {
+                if (Number(node.label) == -1) {
+                    noise_cluster_count += 1;
+                }
+            });
+
+            clusterInfo = document.getElementById("clusterInfo");
+            statisticsDiv = document.getElementById("statistics");
+
+            clusterInfo.innerHTML = `
+            <p>Node position: ${nodePosition}</p>
+            <p>Clustering method: ${clusteringMethod}</p>`;
+
+            statisticsDiv.innerHTML = `
+            <p id="clusterFreqDist">Cluster frequency distribution: ${cluster_freq_dist}</p>
+            <p id="clusterProbDist">Cluster probability distribution: ${cluster_prob_dist}</p>
+            <p id="noiseClusterCount">Noise Cluster: [${noise_cluster_count}]</p>`;
+
+        }
+
+
+        function generateTable(jsonData, id) {
+            if (!jsonData || jsonData.length === 0) {
+                console.error(`Error: Invalid JSON data in generateTable function for id '${id}'`);
+                return;
+            }
+
+            let div = document.createElement('div');
+
+
+            let keys = Object.keys(jsonData[0]);
+            keys.forEach(function (key) {
+                let details = document.createElement('details');
+                details.classList.add('shifted');
+                let summary = document.createElement('summary');
+                summary.innerText = key;
+                details.appendChild(summary);
+                let content = document.createElement('div');
+                content.innerText = jsonData[0][key];
+                details.appendChild(content);
+                div.appendChild(details);
+
+            })
+
+            document.getElementById(id).append(div);
+        }
+
+        function generateDetails(jsonData, id) {
+            let div = document.createElement('div');
+
+            for (let i = 0; i < jsonData.length; i++) {
+                let surroundingDetails = document.createElement('details');
+                surroundingDetails.classList.add('shifted');
+                let surroundingSummary = document.createElement('summary');
+                surroundingSummary.innerText = i.toString();
+                surroundingDetails.appendChild(surroundingSummary);
+                div.appendChild(surroundingDetails);
+                let keys = Object.keys(jsonData[i]);
+                keys.forEach(function (key) {
+                    let details = document.createElement('details');
+                    details.classList.add('shifted');
+                    let summary = document.createElement('summary');
+                    summary.innerText = key;
+                    details.appendChild(summary);
+                    let content = document.createElement('div');
+                    content.innerText = jsonData[i][key];
+                    details.appendChild(content);
+                    surroundingDetails.appendChild(details);
+
+                })
+            }
+
+            document.getElementById(id).append(div);
+        }
+
+
+
+
+        function updateClusterDistribution() {
+            let clusterFreqDist = [];
+            let clusterProbDist = [];
+            let noiseClusterCount = 0;
+            let temp = [];
+            let numberOfNodes = 0;
+
+            nodes.forEach(function (node) {
+                if (!node.hidden) {
+                    temp.push(Number(node.label));
+                }
+
+
+            })
+
+            temp.sort();
+
+            let biggestLabel = temp[temp.length - 1];
+
+            for (let i = 0; i <= biggestLabel; i++) {
+                clusterFreqDist.push(0);
+                clusterProbDist.push(0);
+            }
+
+            temp.forEach(function (item) {
+                if (!(item == -1)) {
+                    numberOfNodes += 1;
+                    clusterFreqDist[item] += 1;
+                } else {
+                    noiseClusterCount += 1;
+                }
+            })
+
+            for (let j = 0; j < clusterFreqDist.length; j++) {
+                if (clusterFreqDist[j] > 0) {
+
+                    clusterProbDist[j] = (clusterFreqDist[j] / numberOfNodes);
+
+                    let parts = clusterProbDist[j].toString().split('.');
+
+                    // Check the length of the decimal part
+                    if (parts[1] && parts[1].length > 5) {
+                        // Round the value to 5 decimal places if the decimal part is longer than 5 digits
+                        clusterProbDist[j] = clusterProbDist[j].toFixed(5);
+                    }
+                }
+            }
+
+            document.getElementById("clusterFreqDist").innerHTML = "Cluster frequency distribution: [" + clusterFreqDist.toString() + "]";
+            document.getElementById("clusterProbDist").innerHTML = "Cluster probability distribution: [" + clusterProbDist.toString() + "]";
+            document.getElementById("noiseClusterCount").innerHTML = "Noise cluster: [" + noiseClusterCount.toString() + "]";
+        }
+
+
+        let annotatorsContainer = document.getElementById("annotatorsContainer");
+        let annotators = [];
+
+        function fillAnnotatorsContainer(jsonData) {
+            let div = document.createElement('div');
+            let h4 = document.createElement('h4');
+            h4.innerHTML = "Annotator filter (resets all other filters): ";
+            div.appendChild(h4);
+
+            for (let i = 0; i < jsonData.length; i++) {
+
+                let annotator = jsonData[i]["annotator"]
+                if (!annotators.includes(annotator)) {
+                    annotators.push(annotator);
+                }
+            }
+
+            annotators.sort();
+
+            for (let j = 0; j < annotators.length; j++) {
+                let label = document.createElement('label');
+                label.innerHTML = annotators[j];
+                label.for = annotators[j];
+                let checkbox = document.createElement('input');
+                checkbox.type = "checkbox";
+                checkbox.checked = true;
+                checkbox.id = annotators[j];
+                div.appendChild(label);
+                div.appendChild(checkbox);
+            }
+
+            let button = document.createElement('button');
+            button.innerHTML = "Show graph";
+            button.onclick = annotatorsFilter;
+            div.appendChild(button);
+            let br = document.createElement('br')
+            let br2 = document.createElement('br')
+            div.appendChild(br);
+            div.appendChild(br2);
+
+            annotatorsContainer.append(div);
+        }
+
+
+
+        function annotatorsFilter() {
+            showSelectLoad();
+            setTimeout(calculateSubGraph, 1000);
+
+
+            setTimeout(hideSelectLoad, 2000);
+
+
+        }
+
+        function calculateSubGraph() {
+            loadingIcon.style.visibility = 'visible';
+            let onlyCheckedAnnotators = [];
+            for (let i = 0; i < annotators.length; i++) {
+                let checkAnnotator = document.getElementById(annotators[i]);
+                if (checkAnnotator.checked) {
+                    onlyCheckedAnnotators.push(annotators[i]);
+                }
+            }
+
+
+            let filteredForAnnotators = filteredStatsDataJoint.filter(row => onlyCheckedAnnotators.includes(row.annotator));
+
+
+            groupPicker.selectedIndex = 0;
+            sliderMin.value = 1;
+            slider.value = 4;
+            sliderDisplay.innerHTML = "4";
+            sliderMinDisplay.innerHTML = "1";
+            checkboxNoiseLabels.checked = true;
+            checkboxNaN.checked = true;
+            maxPicker.selectedIndex = dates.length - 1;
+            minPicker.selectedIndex = 0;
+            minValue = minPicker.value;
+            maxValue = maxPicker.value;
+
+            nodes.forEach(function (node){
+                if(node.hidden){
+                    node.hidden = false;
+                    nodes.update(node);
+                }
+            })
+
+            /*edges.forEach(function (edge) {
+                let to = nodes.get(edge.to);
+                let to_id = to.id;
+
+                let from = nodes.get(edge.from);
+                let from_id = from.id;
+
+                let edgeAnnotations = [];
+
+                for (let k = 0; k < filteredForAnnotators.length; k++) {
+                    let item = filteredForAnnotators[k];
+                    let identifier1 = item.identifier1;
+                    let identifier2 = item.identifier2;
+                    let weight = Number(item.judgment);
+
+                    if((identifier1 == to_id && identifier2 == from_id) || (identifier1 == from_id && identifier2 == to_id)){
+
+                        if(0 < weight < 5){
+                            //console.log("there is a corresponding annotation thats not NaN");
+                            edgeAnnotations.push(weight);
+                        }
+                    }
+                }
+
+                if (edgeAnnotations.length !== 0){
+                let median;
+                let filteredArray = edgeAnnotations;
+                filteredArray.sort((a, b) => a - b);
+                let middle = Math.floor(filteredArray.length / 2);
+                if (filteredArray.length % 2 === 0) {
+                    median = (filteredArray[middle - 1] + filteredArray[middle]) / 2;
+                } else {
+                    median = filteredArray[middle];
+                }
+
+                    console.log("the median for this edge is: " + median);
+
+                    if (median == 0){
+                        median = NaN;
+                    }
+
+                    edge.hidden = false;
+                    edge.weight = median;
+                    edge.label = edge.weight;
+
+                    edges.update(edge);
+
+                    } else {
+                    edge.hidden = true;
+                    edges.update(edge);
+                }
+
+
+
+
+
+
+
+            })
+            */
+
+
+            // Create a map to store the filteredForAnnotators array
+            let annotationsMap = new Map();
+            filteredForAnnotators.forEach(function (item) {
+                let identifier1 = item.identifier1;
+                let identifier2 = item.identifier2;
+                let weight = Number(item.judgment);
+                if (weight >= 0 && weight < 5) {
+                    // Only store annotations with weight between 0 and 5
+                    let key = [identifier1, identifier2].sort().join('-');
+                    let annotations = annotationsMap.get(key) || [];
+                    annotations.push(weight);
+                    annotationsMap.set(key, annotations);
+                }
+            });
+
+            // Iterate over the edges and get the annotations from the map
+            edges.forEach(function (edge) {
+                let to = nodes.get(edge.to);
+                let to_id = to.id;
+                let from = nodes.get(edge.from);
+                let from_id = from.id;
+                let key = [to_id, from_id].sort().join('-');
+                let edgeAnnotations = annotationsMap.get(key) || [];
+
+
+                    //console.log("edge annos: " + edgeAnnotations);
+
+                if (edgeAnnotations.length !== 0) {
+                    let median;
+                    let filteredArray = edgeAnnotations.filter(a => a > 0);
+                    filteredArray.sort((a, b) => a - b);
+
+                    if (filteredArray.length === 0) {
+                        median = 0;
+                    } else {
+                        let middle = Math.floor(filteredArray.length / 2);
+                        if (filteredArray.length % 2 === 0) {
+                            median = (filteredArray[middle - 1] + filteredArray[middle]) / 2;
+                        } else {
+                            median = filteredArray[middle];
+                        }
+                    }
+
+
+                    //console.log("the median for this edge is: " + median);
+
+                    if (median == 0) {
+                        median = NaN;
+                    }
+
+                    edge.hidden = false;
+                    edge.weight = median;
+                    edge.label = edge.weight;
+
+                } else {
+                    edge.hidden = true;
+                }
+
+                edges.update(edge);
+            });
+
+
+
+            loadingIcon.style.visibility = 'hidden';
+
+            calcMean();
+            updateClusterDistribution();
+        }
+
+
+        sliderMin.value = 1;
+        slider.value = 4;
+
+
+    </script>
+</body>
+
+</html>
